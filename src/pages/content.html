@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>正文页 — 学术风演示模板</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../deck.css">
+<style>
+/* ==========================================================================
+   正文页（slides 4–8 每页复用的 chrome）
+   ⚠ 按用户口径：正文页**只抄顶部页题行与底部渐变条**这两条 chrome，
+     中间那几套版式（三图标条 / 五步时间轴 / 环形流程 / 左文右圆图 / 剪角卡片）不临摹。
+     中段内容另配中性组会向材料，用模板自己的正文文字规格排版。
+   chrome 来源：slideLayout7.xml（底部渐变条、双箭头 chevron、右上校徽）
+              + slide4–8.xml（页题框，五页数值完全一致）
+   ========================================================================== */
+.doc { background: var(--c-white); }
+
+/* ---- chrome ①：页题（slide4–8 的「矩形 41/18/30/17/20」同一组数值）----
+   off(1189864, 420782) ext(2648073, 584775) sz=3200 b=1 latin/ea=微软雅黑
+   color=tx1（#000） algn=l wrap=none */
+.doc__title {
+  position: absolute;
+  left: var(--chrome-title-x); top: var(--chrome-title-y);
+  width: var(--chrome-title-w); height: var(--chrome-title-h);
+  padding-left: 9.6px;           /* bodyPr 未写 lIns → 默认 91440 EMU = 9.6px */
+  display: flex; align-items: center;
+  font-family: var(--f-title);
+  font-size: var(--fs-32);
+  font-weight: 700;
+  color: var(--c-ink);
+  white-space: nowrap;
+}
+
+/* ---- chrome ① 前的双箭头（slideLayout7 燕尾形 6 / 燕尾形 1）----
+   prstGeom="chevron" avLst 空 → adj 默认 50000，即箭头尖深 = min(w,h)×0.5 = 16.25px
+   红 #C00000 在 XML 中靠后 → 叠在黄 #FFC000 之上 */
+.doc__chev { position: absolute; top: var(--chrome-chevron-y); overflow: visible; }
+.doc__chev--yellow { left: var(--chrome-chevron-yellow-x); width: var(--chrome-chevron-yellow-w); height: var(--chrome-chevron-h); }
+.doc__chev--red { left: var(--chrome-chevron-red-x); width: var(--chrome-chevron-red-w); height: var(--chrome-chevron-h); }
+
+/* ---- chrome ②：底部渐变条（slideLayout7 矩形 3）----
+   几何与色标原值/实测见 tokens.css 的 --g-bar 注释 */
+.doc__bar {
+  position: absolute;
+  left: 0; top: var(--chrome-bar-y);
+  width: 1280px; height: var(--chrome-bar-h);
+  background: var(--g-bar);
+}
+
+/* ---- chrome ③：右上校徽（slideLayout7 Picture 2 | rId2 = image2.png）---- */
+.doc__logo {
+  position: absolute;
+  left: var(--chrome-logo-x); top: var(--chrome-logo-y);
+  width: var(--chrome-logo-w); height: var(--chrome-logo-h);
+}
+
+/* ---- 中段：中性学术正文（非临摹，内容自配）----
+   用模板自己的正文规格：思源黑体 CN Normal，12pt，行距 150% */
+.doc__body {
+  position: absolute;
+  left: var(--chrome-title-x);
+  top: 130px; right: 124.9px; bottom: 96px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  font-family: var(--f-body);
+  font-size: var(--fs-12);
+  line-height: 1.5;
+  color: var(--c-ink);
+}
+.doc__h2 {
+  margin: 0 0 10px;
+  font-size: var(--fs-16);
+  font-weight: 500;              /* 思源黑体 CN Medium */
+  line-height: 1.5;
+}
+.doc__p { margin: 0 0 12px; }
+.doc__list { margin: 0; padding-left: 1.2em; }
+.doc__list li { margin-bottom: 6px; }
+.doc__note { color: var(--c-gray-900); }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <section class="slide is-solo doc">
+
+    <!-- chrome ①：双箭头 + 页题 -->
+    <svg class="doc__chev doc__chev--yellow" viewBox="0 0 35 32.5" aria-hidden="true">
+      <path d="M0,0 L18.75,0 L35,16.25 L18.75,32.5 L0,32.5 L16.25,16.25 Z" fill="#FFC000"/>
+    </svg>
+    <svg class="doc__chev doc__chev--red" viewBox="0 0 35.5 32.5" aria-hidden="true">
+      <path d="M0,0 L19.25,0 L35.5,16.25 L19.25,32.5 L0,32.5 L16.25,16.25 Z" fill="#C00000"/>
+    </svg>
+    <div class="doc__title">研究背景与意义</div>
+
+    <!-- chrome ③：右上校徽 -->
+    <img class="doc__logo" src="../assets/logo-xjtu.png" alt="西安交通大学">
+
+    <!-- 中段：中性组会向材料（不临摹原版式） -->
+    <div class="doc__body">
+      <div>
+        <h2 class="doc__h2">一、问题的提出</h2>
+        <p class="doc__p">面向高维稀疏场景下的表示学习，现有方法普遍依赖手工先验，导致跨数据集迁移时性能衰减明显。本文从流形假设出发，把该问题形式化为一个受约束的结构保持问题。</p>
+        <p class="doc__p">与既有工作相比，本文的贡献在于：给出可解析的约束松弛条件，并证明了松弛后的解在原始问题上的次优间隙有界。</p>
+        <h2 class="doc__h2">二、研究意义</h2>
+        <p class="doc__p">若该界可被实测验证，则可省去每轮调参中大量的交叉验证开销，对实际部署有直接价值。</p>
+      </div>
+      <div>
+        <h2 class="doc__h2">三、本文安排</h2>
+        <ul class="doc__list">
+          <li>第二章梳理相关工作的两条主线与各自的失效条件；</li>
+          <li>第三章给出模型形式化、松弛条件与收敛性证明；</li>
+          <li>第四章在三个公开数据集上验证界的紧致程度；</li>
+          <li>第五章总结局限并讨论后续可扩展方向。</li>
+        </ul>
+        <p class="doc__note">注：本页正文为中性示例材料，仅用于演示模板的正文排版规格；原模板中段那几套版式未纳入本模板。</p>
+      </div>
+    </div>
+
+    <!-- chrome ②：底部渐变条 -->
+    <div class="doc__bar"></div>
+
+  </section>
+</div>
+
+<script src="../deck.js"></script>
+</body>
+</html>
