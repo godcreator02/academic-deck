@@ -5,60 +5,31 @@
 <title>封面 — 学术风演示模板</title>
 <link rel="stylesheet" href="../tokens.css">
 <link rel="stylesheet" href="../deck.css">
+<link rel="stylesheet" href="../components.css">
 <style>
 /* ==========================================================================
    封面（临摹 source/2025redyellownew.pptx 第 1 页）
    图层从下到上照抄 slide1.xml 的 spTree 顺序：
-     图片 4（底图）→ 矩形 5（奶黄蒙版）→ Picture 2（校徽）→ 文本框 9（校训）
+     图片 4（底图）→ 矩形 5（奶黄蒙版）→ Picture 2（校名区）→ 文本框 9（校训）
      → 文本框 12（副标题）→ 组合 20［细线 + 汇报人 + 细线］
-   每个数值后面的注释是 XML 原值（EMU→px 已换算，1px = 9525 EMU）。
+   组件定义见 ../components.css，本文件只负责「摆位置」。
    ========================================================================== */
 .cover { background: var(--c-white); }
 
-/* 图片 4 | rId2 = image6.jpeg | off(0, 2069190) ext(12192000, 4888852)
-   blipFill 无 srcRect、stretch/fillRect → 纯拉伸（原图 4396×1101 比例 3.99
-   塞进 1280×513.1 比例 2.49），故用 object-fit: fill，不能换成 cover */
-.cover__bg {
-  position: absolute;
-  left: 0; top: 206.9px; width: 1280px; height: 513.1px;
-  object-fit: fill;
-}
+/* Picture 2 | off(4661743, 828438) ext(2873376, 770356) = (489.2, 86.9) 301.5×80.8 */
+.cover__logo { left: 489.2px; top: 86.9px; }
 
-/* 矩形 5 | off(0, -18372) ext(12192000, 6858000) | gradFill lin 90°
-   gs: 1000=#FDEAC4(不透明) 53000=bg1(白) 100000=bg1 + alpha 0 */
-.cover__veil {
-  position: absolute;
-  left: 0; top: -1.9px; width: 1280px; height: 720px;
-  background: var(--g-veil-cover);
-}
-
-/* Picture 2 | rId3 = image2.png | off(4661743, 828438) ext(2873376, 770356) */
-.cover__logo {
-  position: absolute;
-  left: 489.2px; top: 86.9px; width: 301.5px; height: 80.8px;
-}
-
-/* 文本框 9 | off(1103107, 1971953) ext(10189197, 708324)
-   sz=4000 b=1 algn=ctr，字色是 gradFill lin 45°: 1000=#C00000 100000=#FFC000 */
+/* 文本框 9 | off(1103107, 1971953) ext(10189197, 708324) = (115.7, 206.9) 1068.9×74.3 */
 .cover__motto {
   position: absolute;
   left: 115.7px; top: 206.9px; width: 1068.9px; height: 74.3px;
-  font-family: var(--f-title);
-  font-size: var(--fs-40);
-  font-weight: 700;
-  line-height: 74.3px;          /* 单行，行高取框高即垂直居中（PPT anchor=t + tIns 4.8px ≈ 居中） */
-  text-align: center;
-  white-space: pre-wrap;        /* 原值四句之间是两个空格，HTML 默认会折叠成一个 */
-  background: var(--g-motto);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  line-height: 74.3px;
 }
 
-/* 文本框 12 | off(3283899, 3042113) ext(5208214, 369332)
-   sz=1800 b=1 algn=dist（分散对齐，三段 run 撑满 546.7px） color=#C92B2F
-   bodyPr 未写 lIns → 用默认 91440 EMU = 9.6px：分散对齐发生在这 9.6px 之内，
-   实测 PPT 文字宽 527 = 546.7 − 9.6×2，所以必须补 padding，否则会撑成 546.7 */
+/* 文本框 12 | off(3283899, 3042113) ext(5208214, 369332) = (344.7, 319.3) 546.7×38.8
+   sz=1800 b=1 algn=dist color=#C92B2F
+   bodyPr 未写 lIns → 默认 91440 EMU = 9.6px：分散对齐发生在这 9.6px 之内，
+   实测 PPT 文字宽 527 = 546.7 − 9.6×2，故必须补 padding 否则会撑成 546.7 */
 .cover__subtitle {
   position: absolute;
   left: 344.7px; top: 319.3px; width: 546.7px; height: 38.8px;
@@ -72,22 +43,17 @@
   text-align-last: justify;
 }
 
-/* 组合 20 内两条 cxnSp：线色 #C00000，ln w=12700 EMU (1.33px)
-   左 off(2393909,3760914) ext(1980160, 4445)；右 off(7817962,3761866) ext(1980160, 0) */
-.cover__rule {
-  position: absolute;
-  width: 207.9px; height: 1.33px;
-  background: var(--c-red-deep);
-}
+/* 组合 20：左线 off(2393909,3760914) / 右线 off(7817962,3761866) ext(1980160, …)
+   ⚠ 组合的 chOff≠off（chOff x=2044700 vs off x=2393909），子形状坐标需换算：
+     绝对 x = off + (child − chOff) → 左线 251.3、右线 820.8（不是 dump 里的 214.7/784.1） */
 .cover__rule--l { left: 251.3px; top: 413.8px; }
 .cover__rule--r { left: 820.8px; top: 414.2px; }
 
-/* 组合 20 文本框 16 | off(4538989, 3760914) ext(3112988, 369332)
-   sz=1800 b=1 algn=dist color=#C00000 */
+/* 文本框 16 | 组合内 off(4538989,3760914) ext(3112988, 369332) = (476.7,394.8) 326.7×38.8 */
 .cover__presenter {
   position: absolute;
   left: 476.7px; top: 394.8px; width: 326.7px; height: 38.8px;
-  padding: 0 9.6px;             /* 同上：默认 lIns/rIns 9.6px */
+  padding: 0 9.6px;
   font-family: var(--f-title);
   font-size: var(--fs-18);
   font-weight: 700;
@@ -103,19 +69,19 @@
 <div class="stage">
   <section class="slide is-solo cover">
 
-    <img class="cover__bg" src="../assets/bg-cover.jpeg" alt="">
-    <div class="cover__veil"></div>
+    <img class="cover-bg" src="../assets/bg-cover.jpeg" alt="">
+    <div class="cover-veil"></div>
 
-    <img class="cover__logo" src="../assets/logo-xjtu.png" alt="西安交通大学">
+    <img class="brandmark cover__logo" src="../assets/logo-xjtu.png" alt="西安交通大学">
 
-    <div class="cover__motto">精勤求学  敦笃励志  果毅力行  忠恕任事</div>
+    <div class="motto cover__motto">精勤求学  敦笃励志  果毅力行  忠恕任事</div>
 
     <div class="cover__subtitle">西安交通大学学术风格汇报答辩PPT模版</div>
 
     <!-- 组合 20：左线 + 汇报人 + 右线 -->
-    <span class="cover__rule cover__rule--l"></span>
+    <span class="hairline cover__rule--l"></span>
     <div class="cover__presenter">汇报人：网络信息中心</div>
-    <span class="cover__rule cover__rule--r"></span>
+    <span class="hairline cover__rule--r"></span>
 
   </section>
 </div>

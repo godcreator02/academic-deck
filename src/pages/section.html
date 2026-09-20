@@ -5,93 +5,16 @@
 <title>章节过渡 — 学术风演示模板</title>
 <link rel="stylesheet" href="../tokens.css">
 <link rel="stylesheet" href="../deck.css">
+<link rel="stylesheet" href="../components.css">
 <style>
 /* ==========================================================================
    章节过渡页（临摹第 3 页）
    图层照抄 slide3.xml spTree 顺序：
      矩形 4（右侧大标题）→ 标题 1（下方小字说明）→ 组合 8［底图 + 橙色蒙版 +
      Part 渐变条 + Part 01 文字］
-   占位文字按 BRIEF 换成中性组会向材料。
+   占位文字按 BRIEF 换成中性组会向材料。组件定义见 ../components.css。
    ========================================================================== */
 .section { background: var(--c-white); }
-
-/* 矩形 4 | off(4556663, 4543813) ext(6965645, 819714)
-   sz=4400 b=1 latin/ea=微软雅黑 color=tx1 algn=r anchor=ctr */
-.section__title {
-  position: absolute;
-  left: 478.2px; top: 476.7px; width: 731.1px; height: 86px;
-  display: flex; align-items: center; justify-content: flex-end;
-  font-family: var(--f-title);
-  font-size: var(--fs-44);
-  font-weight: 700;
-  color: var(--c-ink);
-}
-
-/* 标题 1 | off(5038388, 5266944) ext(6270738, 1509138)
-   sz=1200 latin/ea=微软雅黑 color=bg1 lumMod=50000（白×50%亮度 = #808080）
-   algn=r anchor=t lnSpc=150000，bodyPr insL=0 insT=0（无内缩） */
-.section__lead {
-  position: absolute;
-  left: 528.7px; top: 552.7px; width: 658px; height: 158.4px;
-  text-align: right;
-  font-family: var(--f-title);
-  font-size: var(--fs-12);
-  line-height: 1.5;             /* lnSpc=150% */
-  color: var(--c-gray-600);
-}
-
-/* ---- 组合 8：整条图片带 ---- */
-
-/* 图片 7 | rId2 = image7.jpg | off(673100,1301750) ext(10947400,3133225)
-   blipFill srcRect t="20623" b="35306" → 纵向裁掉上 20.623% / 下 35.306%，只留中间 44.071%
-   再拉伸填满 1149.3×328.7。等价复刻：容器 overflow:hidden = 图片框本体，
-   整图高 = 328.7 / 0.44071 = 745.84px，上移 0.20623×745.84 = 153.82px */
-.section__band {
-  position: absolute;
-  left: 70.7px; top: 136.7px; width: 1149.3px; height: 328.7px;
-  overflow: hidden;
-}
-.section__band > img {
-  position: absolute;
-  left: 0; top: -153.82px; width: 1149.3px; height: 745.84px;
-}
-
-/* 矩形 2 | 同 off，ext(10947400, 3112213) | gradFill lin 90°（θ=90° 故 CSS 仍是 180deg）
-   gs: 1000=#E49E3F（不透明）40000=bg1 alpha54% 100000=bg1 alpha0
-   拆成颜色层 + 遮罩层：避开 CSS 预乘 alpha 插值与 PowerPoint 直乘插值的差异 */
-.section__wash {
-  position: absolute;
-  left: 70.7px; top: 136.7px; width: 1149.3px; height: 326.7px;
-  background: var(--g-veil-band-color);
-  -webkit-mask-image: var(--g-veil-band-alpha);
-  mask-image: var(--g-veil-band-alpha);
-}
-
-/* i$lîdé（形状名是乱码，PPT 里就这么存的）| off(673100, 3583...) ext(6336987, 685800)
-   gradFill lin 315°（OOXML ang=18900000）gs: 1000=#C00000 → 100000=#E49E3F
-   bodyPr insL=91440 insT=45720 */
-.section__partbar {
-  position: absolute;
-  left: 70.7px; top: 394.3px; width: 665.3px; height: 72px;
-  background: var(--g-part);
-}
-
-/* 文本框 6 | off(914400,3785969) ext(2470150, 646331)
-   sz=3600 b=0 latin="Arial Black" ea="字魂105号-简雅黑" color=prstClr white
-   effectLst outerShdw blurRad=38100 dist=38100 dir=45° #000 alpha43.137%
-   原文是 "Part  01"（两个空格），用 pre-wrap 保住 */
-.section__part {
-  position: absolute;
-  left: 96px; top: 397.5px; width: 259.3px; height: 67.9px;
-  display: flex; align-items: center;
-  font-family: var(--f-heavy);
-  font-size: var(--fs-36);
-  font-weight: 400;             /* b=0，Arial Black 自带粗度 */
-  color: var(--c-white);
-  text-shadow: var(--sh-part);
-  white-space: pre-wrap;
-  letter-spacing: 0;
-}
 </style>
 </head>
 <body>
@@ -99,13 +22,14 @@
 <div class="stage">
   <section class="slide is-solo section">
 
-    <div class="section__title">研究背景与意义</div>
-    <div class="section__lead">本章说明课题来源、研究意义，以及本文要解决的核心问题与整体安排。</div>
+    <div class="band__title">研究背景与意义</div>
+    <div class="band__lead">本章说明课题来源、研究意义，以及本文要解决的核心问题与整体安排。</div>
 
-    <div class="section__band"><img src="../assets/bg-section.jpg" alt=""></div>
-    <div class="section__wash"></div>
-    <div class="section__partbar"></div>
-    <div class="section__part">Part  01</div>
+    <!-- 组合 8：图片带 + 蒙版 + Part 条 + Part 文字（几何全在 components.css 里） -->
+    <div class="band"><img class="band__img" src="../assets/bg-section.jpg" alt=""></div>
+    <div class="band__wash"></div>
+    <div class="band__bar"></div>
+    <div class="band__part">Part  01</div>
 
   </section>
 </div>

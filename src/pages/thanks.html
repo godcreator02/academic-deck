@@ -5,86 +5,42 @@
 <title>封底 — 学术风演示模板</title>
 <link rel="stylesheet" href="../tokens.css">
 <link rel="stylesheet" href="../deck.css">
+<link rel="stylesheet" href="../components.css">
 <style>
 /* ==========================================================================
    封底（临摹第 9 页）
    图层照抄 slide9.xml spTree 顺序：
      图片 4（底图）→ 矩形 5（奶黄蒙版）→ 空心弧 11 → 组合 1［THANKS + 谢谢各位专家］
      → Picture 2（校名区）
+   组件定义见 ../components.css，本文件只负责「摆位置」。
    ========================================================================== */
 .thanks { background: var(--c-white); }
 
-/* 图片 4 | rId2 = image6.jpeg | off(0, 1971953) ext(12192000, 4888852)
-   与封面同一张图、同一处拉伸（srcRect 空 + fillRect） */
-.thanks__bg {
-  position: absolute;
-  left: 0; top: 206.9px; width: 1280px; height: 513.1px;
-  object-fit: fill;
-}
-
-/* 矩形 5 | 与封面 矩形 5 完全同值（1%#FDEAC4 → 53%白 → 100%白 alpha0） */
-.thanks__veil {
-  position: absolute;
-  left: 0; top: -1.9px; width: 1280px; height: 720px;
-  background: var(--g-veil-cover);
-}
-
-/* 空心弧 11 | off(6584951, 2011478) ext(1976967,1976967) rot=7086271
-   prstGeom="blockArc" avLst: adj1=5502533(91.709°) adj2=1980318(33.005°) adj3=1053
+/* 空心弧 11 | off(6584951, 2011478) ext(1976967,1976967) = (691.3,211.2) 207.6×207.6
+   rot=7086271(118.104°)；prstGeom="blockArc"
+   avLst: adj1=5502533(91.709°) adj2=1980318(33.005°) adj3=1053
    fill=#E49E3F，ln=#595959 w=3175(0.333px) algn=ctr
-   换算：ss=207.6，环厚 = 1053/100000×207.6 = 2.186px；
-        外半径 103.8、内半径 101.614、中线半径 102.7；
-        弧自身从 91.709° 顺时针扫到 33.005°（扫过 301.296°）；
-        再整体 rot 118.104° 顺时针 → 缺口落在 (33.005+91.709)/2+118.104 = 180.46°（正左）
-   SVG 里 <circle> 路径自 3 点钟起、顺时针铺；故用 dasharray 直接表达（无需再转 transform）：
+   换算：环厚 = 1053/100000×207.6 = 2.186px；外半径 103.8、内半径 101.614、中线 102.7
+        弧自 91.709° 顺时针扫到 33.005°（扫过 301.296°），再整体 rot 118.104°
+        → 缺口落在 (33.005+91.709)/2 + 118.104 = 180.46°（正左）
+   SVG <circle> 路径自 3 点钟起、顺时针铺，故用 dasharray 直接表达（无需再转 transform）：
         周长 = 2π×102.7 = 645.29
-        起笔先画 0°→151.1°（=(33.005+118.104)）= 270.85
-        缺口 151.1°→209.8°（=(91.709+118.104)）= 105.23
+        起笔先画 0°→151.1°（=33.005+118.104）= 270.85
+        缺口 151.1°→209.8°（=91.709+118.104）= 105.23
         其余自动补满 */
-.thanks__arc {
-  position: absolute;
-  left: 691.3px; top: 211.2px; width: 207.6px; height: 207.6px;
-  overflow: visible;
-}
+.thanks__arc { position: absolute; overflow: visible; left: 691.3px; top: 211.2px; width: 207.6px; height: 207.6px; }
 
-/* 组合 1 / TextBox 2 | off(3542181, 2331728) ext(4640681, 1323564)
-   sz=8000 b=1 latin/ea=微软雅黑，字色 gradFill lin 90°: 1000=#C86142 → 100000=#E49E3F
-   bodyPr wrap="none"、pPr 未写 algn → 默认左对齐，故文字自框左 + lIns 9.6px 起、不换行 */
-.thanks__word {
-  position: absolute;
-  left: 371.6px; top: 244.7px; width: 486.9px; height: 138.9px;
-  padding-left: 9.6px;
-  font-family: var(--f-title);
-  font-size: var(--fs-80);
-  font-weight: 700;
-  line-height: 138.9px;
-  white-space: nowrap;
-  background: var(--g-thanks);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
+/* 组合 1 / TextBox 2 | off(3542181,2331728) ext(4640681,1323564) = (371.6,244.7) 486.9×138.9 */
+.thanks__word { left: 371.6px; top: 244.7px; width: 486.9px; height: 138.9px; }
 
-/* 组合 1 / TextBox 8 | off(3738878,3461456) ext(2925431, 462447)
-   sz=2400 b=1 color=#404040 algn=dist（分散对齐，撑满去内缩后的 287.7px） */
+/* 组合 1 / TextBox 8 | off(3738878,3461456) ext(2925431,462447) = (392.2,363) 306.9×48.5 */
 .thanks__sub {
-  position: absolute;
   left: 392.2px; top: 363px; width: 306.9px; height: 48.5px;
-  padding: 0 9.6px;
-  font-family: var(--f-title);
-  font-size: var(--fs-24);
-  font-weight: 700;
   line-height: 48.5px;
-  color: var(--c-gray-900);
-  text-align: justify;
-  text-align-last: justify;
 }
 
-/* Picture 2 | rId3 = image2.png | off(4661743, 860046) ext(2873376, 770356) */
-.thanks__logo {
-  position: absolute;
-  left: 489.2px; top: 90.2px; width: 301.5px; height: 80.8px;
-}
+/* Picture 2 | off(4661743,860046) ext(2873376,770356) = (489.2, 90.2) 301.5×80.8 */
+.thanks__logo { left: 489.2px; top: 90.2px; }
 </style>
 </head>
 <body>
@@ -92,8 +48,8 @@
 <div class="stage">
   <section class="slide is-solo thanks">
 
-    <img class="thanks__bg" src="../assets/bg-cover.jpeg" alt="">
-    <div class="thanks__veil"></div>
+    <img class="thanks-bg" src="../assets/bg-cover.jpeg" alt="">
+    <div class="cover-veil"></div>
 
     <svg class="thanks__arc" viewBox="0 0 207.6 207.6" aria-hidden="true">
       <!-- 外圈细描边 ln=#595959（画宽 = 环厚 + 线宽，露出的那 0.333px 就是原线） -->
@@ -106,10 +62,10 @@
               stroke-dasharray="270.85 105.23"/>
     </svg>
 
-    <div class="thanks__word">THANKS</div>
-    <div class="thanks__sub">谢谢各位专家</div>
+    <div class="wordmark thanks__word">THANKS</div>
+    <div class="wordmark-sub thanks__sub">谢谢各位专家</div>
 
-    <img class="thanks__logo" src="../assets/logo-xjtu.png" alt="西安交通大学">
+    <img class="brandmark thanks__logo" src="../assets/logo-xjtu.png" alt="西安交通大学">
 
   </section>
 </div>

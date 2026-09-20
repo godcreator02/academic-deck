@@ -1,0 +1,490 @@
+/* ==========================================================================
+   components.css — 原子组件库（从 src/pages/ 的临摹稿反提）
+   约定：
+     · 组件自带「内在本性」——形状、颜色、字体、字号、阴影、内边距；
+     · 位置由页面给（页面里用 .xxx--placement 之类的类设 left/top/width/height），
+       组件本体不写死坐标，这样才能被 demo 与后续讲义复用。
+   每个组件注释里标了正本出处：
+     ［临摹］= 数值照抄自 pptx（附 XML 原值）
+     ［提炼］= 由临摹稿的色板/字阶/形状语言推出的新原子，原模板没有对应形状
+   ========================================================================== */
+
+/* ==========================================================================
+   1. 双箭头标记（正文页页眉）
+   ［临摹］slideLayout7「燕尾形 6/1」prstGeom="chevron" avLst 空 → adj 默认 50000
+   箭头尖深 = min(w,h) × 0.5 = 16.25px
+   红 #C00000 尺寸 35.5×32.5 在 XML 中靠后 → 叠在黄 #FFC000（35×32.5）之上
+   用 clip-path 表达 chevron 轮廓，省掉每页重复的内联 SVG
+   ========================================================================== */
+.chev {
+  position: absolute;
+  top: var(--chrome-chevron-y);
+  height: var(--chrome-chevron-h);
+  display: block;
+}
+.chev--red {
+  left: var(--chrome-chevron-red-x);
+  width: var(--chrome-chevron-red-w);
+  background: var(--c-red-deep);
+  /* 尖深 16.25 / 宽 35.5 → 45.77% ; 折点 19.25 / 35.5 → 54.23% */
+  clip-path: polygon(0 0, 54.23% 0, 100% 50%, 54.23% 100%, 0 100%, 45.77% 50%);
+}
+.chev--yellow {
+  left: var(--chrome-chevron-yellow-x);
+  width: var(--chrome-chevron-yellow-w);
+  background: var(--c-yellow);
+  /* 尖深 16.25 / 宽 35 → 46.43% ; 折点 18.75 / 35 → 53.57% */
+  clip-path: polygon(0 0, 53.57% 0, 100% 50%, 53.57% 100%, 0 100%, 46.43% 50%);
+}
+
+/* ==========================================================================
+   2. 页眉（正文页 chrome）
+   ［临摹］slide4–8 的「矩形 41/18/30/17/20」五页数值完全一致：
+     off(1189864, 420782) 即 (124.9, 44.2) ext(2648073, 584775) 即 277.9×61.4
+     sz=3200(32pt) b=1 latin/ea=微软雅黑 color=tx1(#000) algn=l wrap=none
+     bodyPr 未写 lIns → 默认 91440 EMU = 9.6px（实测 PPT 墨迹起于 135 = 124.9+9.6）
+   ========================================================================== */
+.page-head {
+  position: absolute;
+  left: var(--chrome-title-x);
+  top: var(--chrome-title-y);
+  width: var(--chrome-title-w);
+  height: var(--chrome-title-h);
+  padding-left: 9.6px;
+  display: flex;
+  align-items: center;
+  font-family: var(--f-title);
+  font-size: var(--fs-32);
+  font-weight: 700;
+  color: var(--c-ink);
+  white-space: nowrap;
+}
+
+/* 右上校徽 ［临摹］slideLayout7「Picture 2」off(9766687,392254) ext(2112254,565743)
+   = (1025.4, 41.2) 221.8×59.4；rId2 = image2.png */
+.page-logo {
+  position: absolute;
+  left: var(--chrome-logo-x);
+  top: var(--chrome-logo-y);
+  width: var(--chrome-logo-w);
+  height: var(--chrome-logo-h);
+}
+
+/* 底部渐变条 ［临摹］slideLayout7「矩形 3」off(0,6777038) ext(12192000,74611)
+   = (0, 711.5) 1280×7.8；色标与一维性说明见 tokens.css --g-bar */
+.page-bar {
+  position: absolute;
+  left: 0;
+  top: var(--chrome-bar-y);
+  width: var(--canvas-w);
+  height: var(--chrome-bar-h);
+  background: var(--g-bar);
+}
+
+/* ==========================================================================
+   3. 页码
+   ［提炼］原模板没有页码。用模板自己的灰阶与红：次要位 #95A5A6、当前页 #C00000，
+        字号取页面实测并集里最小的 12pt，与正文小字同阶。
+   放在底部渐变条上方、右对齐到正文右边距。
+   ========================================================================== */
+.pager {
+  position: absolute;
+  right: var(--chrome-title-x);
+  bottom: 26px;
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  font-family: var(--f-pill);
+  font-size: var(--fs-12);
+  letter-spacing: .06em;
+  color: var(--c-gray-500);
+}
+.pager__cur {
+  font-size: var(--fs-16);
+  font-weight: 700;
+  color: var(--c-red-deep);
+}
+.pager__sep { margin: 0 3px; opacity: .5; }
+
+/* ==========================================================================
+   4. 目录页：徽标 + 金环 + 条目
+   ［临摹］徽标 slideLayout3「椭圆 5」off(2228850,2181225) ext(2727325,2659388)
+        = (234, 228.9) 286.1×279，白底，sz=4800 b=1 latin=Tahoma ea=微软雅黑 #C00000
+   ［临摹］金环「椭圆 6」off(2408074,2358678) ext(2370071,2302347)
+        = (252.7, 247.6) 248.8×241.7，noFill + ln w=57150(6px) algn=ctr
+        gradFill lin 225°：0%#FFC000 → 100%#C00000
+        ⚠ algn=ctr 表示描边骑在几何边界上、向外溢出半个线宽 → 路径半径 = 边长/2
+        ⚠ SVG 的 viewBox 必须与元素框 1:1（缩放比≠1 会被 preserveAspectRatio 整体缩掉）
+   ========================================================================== */
+.toc-badge {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--c-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--f-pill);
+  font-size: var(--fs-48);
+  font-weight: 700;
+  color: var(--c-red-deep);
+}
+.toc-ring { position: absolute; overflow: visible; }
+
+/* ［临摹］slide2「KSO_Shape」roundRect adj=50000（全圆角胶囊）
+     ext(4530755,584775) = 475.7×61.4 → 圆角 30.7px
+     fill=#FFFFFF ln=noFill，effectLst outerShdw blurRad=50800 dist=38100 dir=90°
+     #002060 alpha40% → box-shadow 0 4px 5.3px rgba(0,32,96,.4)
+     sz=2800 b=1 latin=Tahoma ea=微软雅黑 color=tx1 lumMod95/lumOff5 ≈ #0D0D0D */
+.toc-item {
+  position: absolute;
+  width: 475.7px;
+  height: 61.4px;
+  border-radius: 30.7px;
+  background: var(--c-white);
+  box-shadow: var(--sh-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--f-pill);
+  font-size: var(--fs-28);
+  font-weight: 700;
+  color: var(--c-ink-soft);
+}
+
+/* ［临摹］slide2「椭圆 18/20/22/24」Ø50 fill=#C00000；数字 sz=2400 b=1 白 */
+.toc-num {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--c-red-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--f-title);
+  font-size: var(--fs-24);
+  font-weight: 700;
+  color: var(--c-white);
+}
+
+/* ==========================================================================
+   5. 章节过渡页：整条图片带 + 橙色蒙版 + Part 条
+   ［临摹］slide3 组合 8（图片 7 + 矩形 2 + i$lîdé + 文本框 6）
+     图片带 (70.7,136.7) 1149.3×328.7，blipFill srcRect t=20623 b=35306
+       → 纵向裁掉上 20.623% / 下 35.306%，只留中间 44.071% 再拉伸填满
+       → 「容器 overflow:hidden + 整图放大偏移」等价复刻：
+          整图高 = 328.7 / 0.44071 = 745.84px，上移 0.20623×745.84 = 153.82px
+     蒙版 矩形 2 (70.7,136.7) 1149.3×326.7，θ=90°，1%#E49E3F → 40%白 α54% → 100%α0
+       （拆成颜色层 + 遮罩层，避开 CSS 预乘 alpha 与 PowerPoint 直乘的差异）
+     Part 条 i$lîdé (70.7,394.3) 665.3×72，θ=315° → CSS 6.18deg，#C00000 → #E49E3F
+     Part 文字 (96,397.5) 259.3×67.9，Arial Black 36pt 白 + 45° 外阴影
+   ========================================================================== */
+.band {
+  position: absolute;
+  left: 70.7px;
+  top: 136.7px;
+  width: 1149.3px;
+  height: 328.7px;
+  overflow: hidden;
+}
+.band__img {
+  position: absolute;
+  left: 0;
+  top: -153.82px;
+  width: 1149.3px;
+  height: 745.84px;
+}
+.band__wash {
+  position: absolute;
+  left: 70.7px;
+  top: 136.7px;
+  width: 1149.3px;
+  height: 326.7px;
+  background: var(--g-veil-band-color);
+  -webkit-mask-image: var(--g-veil-band-alpha);
+  mask-image: var(--g-veil-band-alpha);
+}
+.band__bar {
+  position: absolute;
+  left: 70.7px;
+  top: 394.3px;
+  width: 665.3px;
+  height: 72px;
+  background: var(--g-part);
+}
+.band__part {
+  position: absolute;
+  left: 96px;
+  top: 397.5px;
+  width: 259.3px;
+  height: 67.9px;
+  display: flex;
+  align-items: center;
+  font-family: var(--f-heavy);
+  font-size: var(--fs-36);
+  font-weight: 400;
+  color: var(--c-white);
+  text-shadow: var(--sh-part);
+  white-space: pre-wrap;
+}
+/* ［临摹］slide3「矩形 4」off(4556663,4543813) ext(6965645,819714)
+     = (478.2, 476.7) 731.1×86，sz=4400 b=1 微软雅黑 #000 algn=r anchor=ctr */
+.band__title {
+  position: absolute;
+  left: 478.2px;
+  top: 476.7px;
+  width: 731.1px;
+  height: 86px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-family: var(--f-title);
+  font-size: var(--fs-44);
+  font-weight: 700;
+  color: var(--c-ink);
+}
+/* ［临摹］slide3「标题 1」(528.7,552.7) 658×158.4
+     sz=1200 微软雅黑 color=bg1 lumMod=50000（白 ×50% 亮度 = #808080）
+     algn=r anchor=t lnSpc=150000，insL=insT=0 */
+.band__lead {
+  position: absolute;
+  left: 528.7px;
+  top: 552.7px;
+  width: 658px;
+  height: 158.4px;
+  text-align: right;
+  font-family: var(--f-title);
+  font-size: var(--fs-12);
+  line-height: 1.5;
+  color: var(--c-gray-600);
+}
+
+/* ==========================================================================
+   6. 封底/封面 字标
+   ［临摹］slide9「TextBox 2」(371.6,244.7) 486.9×138.9
+     sz=8000(80pt) b=1 微软雅黑，字色 gradFill lin 90°：#C86142 → #E49E3F
+     wrap=none algn=默认左 → 文字自框左 + lIns 9.6px 起、不换行
+   ========================================================================== */
+.wordmark {
+  position: absolute;
+  font-family: var(--f-title);
+  font-size: var(--fs-80);
+  font-weight: 700;
+  line-height: 138.9px;
+  white-space: nowrap;
+  padding-left: 9.6px;
+  background: var(--g-thanks);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+/* ［临摹］slide9「TextBox 8」(392.2,363) 306.9×48.5 sz=2400 b=1 #404040 algn=dist */
+.wordmark-sub {
+  position: absolute;
+  padding: 0 9.6px;
+  font-family: var(--f-title);
+  font-size: var(--fs-24);
+  font-weight: 700;
+  color: var(--c-gray-900);
+  text-align: justify;
+  text-align-last: justify;
+}
+
+/* 封面校训 ［临摹］slide1「文本框 9」(115.7,206.9) 1068.9×74.3
+     sz=4000 b=1 微软雅黑 algn=ctr，字色 gradFill θ=45°：#C00000 → #FFC000
+     原文四句之间是两个空格 → pre-wrap 保住 */
+.motto {
+  font-family: var(--f-title);
+  font-size: var(--fs-40);
+  font-weight: 700;
+  text-align: center;
+  white-space: pre-wrap;
+  background: var(--g-motto);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+/* 封面/封底的校名区、奶黄蒙版、底图 ［临摹］ */
+.cover-bg,
+.thanks-bg {
+  position: absolute;
+  left: 0;
+  top: 206.9px;
+  width: 1280px;
+  height: 513.1px;
+  object-fit: fill;   /* srcRect 空 + fillRect → 纯拉伸，不能换 cover */
+}
+.cover-veil {
+  position: absolute;
+  left: 0;
+  top: -1.9px;
+  width: 1280px;
+  height: 720px;
+  background: var(--g-veil-cover);
+}
+.brandmark {
+  position: absolute;
+  width: 301.5px;
+  height: 80.8px;
+}
+/* ［临摹］slide1 组合 20 的两条 cxnSp：线 #C00000 w=12700 EMU(1.33px)；
+   文本框 16 sz=1800 b=1 #C00000 algn=dist */
+.hairline {
+  position: absolute;
+  width: 207.9px;
+  height: 1.33px;
+  background: var(--c-red-deep);
+}
+
+/* ==========================================================================
+   7. 正文页中段原子（模板中段版式未纳入，这些是按模板色板/字阶提炼的新原子）
+   ========================================================================== */
+
+/* 7.1 定理/定义/引理框
+   ［提炼］形状语言取自 slide7 的「白圆角矩形 + 3.8px 彩条」（矩形 7=#C86142、
+        矩形 8=#E49E3F，实测宽 3.8px / 高 3.8px）；色取页面 srgbClr 实测的
+        重字强调色 #002060（定义类）与三红。 */
+.box {
+  position: relative;
+  margin: 0 0 14px;
+  padding: 12px 16px 12px 20px;
+  background: var(--c-white);
+  border: 1px solid #EDEDED;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 32, 96, .08);
+  font-family: var(--f-body);
+  font-size: var(--fs-12);
+  line-height: 1.5;
+  color: var(--c-ink);
+}
+.box::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3.8px;             /* slide7 矩形 7/8 实测宽 */
+  border-radius: 6px 0 0 6px;
+  background: var(--box-accent, var(--c-red-deep));
+}
+.box__label {
+  font-weight: 700;
+  color: var(--box-accent, var(--c-red-deep));
+}
+.box--theorem { --box-accent: var(--c-red-deep); }    /* #C00000 */
+.box--def { --box-accent: var(--c-navy); }            /* #002060 定义类强调 */
+.box--lemma { --box-accent: var(--c-brick); }         /* #C86142 */
+.box--remark { --box-accent: var(--c-amber); }        /* #E49E3F */
+.box--plain { --box-accent: var(--c-gray-500); }
+
+/* 7.2 要点条
+   ［提炼］编号块取 slide5「矩形:对角圆角 3/5/7/9/11」的语言：
+        round2DiagRect（对角两圆角）、#C86142 / #E49E3F 交替、白字。
+        原块 72.8×72.8、字 16pt；这里缩到 28px 作行内标号，等比保留圆角语言。 */
+.points { margin: 0 0 14px; padding: 0; list-style: none; }
+.point {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 10px;
+  align-items: start;
+  margin-bottom: 9px;
+  font-family: var(--f-body);
+  font-size: var(--fs-12);
+  line-height: 1.5;
+}
+.point__no {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px 0 8px 0;      /* round2DiagRect：对角两圆角 */
+  background: var(--c-brick);
+  color: var(--c-white);
+  font-family: var(--f-body);
+  font-size: var(--fs-14);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.point:nth-child(even) .point__no { background: var(--c-amber); }
+
+/* 7.3 icon 块
+   ［提炼］取 slide4「椭圆 6/7/8」Ø104 fill=#FFC000/#C86142 的图标处理：
+        实心彩圆 + 白色字形；此处做成可缩放的 inline block。 */
+.iconblk {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--c-amber);
+  color: var(--c-white);
+  font-family: var(--f-body);
+  font-size: var(--fs-16);
+  font-weight: 500;
+  vertical-align: middle;
+}
+.iconblk--red { background: var(--c-red-deep); }
+.iconblk--brick { background: var(--c-brick); }
+.iconblk--yellow { background: var(--c-yellow); }
+
+/* 7.4 图注
+   ［提炼］字号/灰阶取页面实测并集：12pt + #95A5A6；编号用主红。 */
+.figcap {
+  margin: 6px 0 14px;
+  text-align: center;
+  font-family: var(--f-body);
+  font-size: var(--fs-12);
+  line-height: 1.5;
+  color: var(--c-gray-500);
+}
+.figcap__no { color: var(--c-red-deep); font-weight: 500; margin-right: .35em; }
+
+/* 7.5 脚注与引用角标
+   ［提炼］角标用主红上标；脚注区 12pt #808080（与章节页说明同一灰阶）。 */
+.fnref {
+  font-size: .68em;
+  vertical-align: super;
+  line-height: 0;
+  color: var(--c-red-deep);
+  font-weight: 500;
+}
+.footnotes {
+  position: absolute;
+  left: var(--chrome-title-x);
+  right: var(--chrome-title-x);
+  bottom: 62px;
+  padding-top: 8px;
+  border-top: 1px solid #EDEDED;
+  font-family: var(--f-body);
+  font-size: var(--fs-12);
+  line-height: 1.45;
+  color: var(--c-gray-600);
+}
+.footnotes p { margin: 0 0 3px; }
+
+/* ==========================================================================
+   8. 正文排版基元
+   ［提炼］字号/行距取自页面实测：正文 12pt、lnSpc 150%；小节题 16pt 思源黑体 Medium
+   ========================================================================== */
+.prose {
+  font-family: var(--f-body);
+  font-size: var(--fs-12);
+  line-height: 1.5;
+  color: var(--c-ink);
+}
+.prose h3 {
+  margin: 0 0 8px;
+  font-size: var(--fs-16);
+  font-weight: 500;
+}
+.prose p { margin: 0 0 10px; }
+.prose ul { margin: 0 0 10px; padding-left: 1.25em; }
+.prose li { margin-bottom: 5px; }
+.prose strong { font-weight: 500; color: var(--c-red-deep); }
+.prose em { color: var(--c-navy); font-style: normal; font-weight: 500; }
+.cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 44px;
+}
