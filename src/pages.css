@@ -24,7 +24,10 @@
 /* 文本框 12 | (258.5, 239.4721) 410×29.0813 pt；源 sz=1800 b=1 algn=dist color=#C92B2F
    ［决策 D4］18pt → 20pt（正文档）。
    bodyPr 未写 lIns → 默认 7.2pt：分散对齐发生在这 7.2pt 之内，
-   实测 PPT 文字宽 = 410 − 7.2×2，故必须补 padding 否则会撑满 410 */
+   实测 PPT 文字宽 = 410 − 7.2×2，故必须补 padding 否则会撑满 410
+   ⚠ 容量：410pt 去内缩后 395.6pt，20pt 下每行约 19 个汉字。
+     副标题必须控制在这一行内——一旦折行，text-align-last:justify 会把最后一行
+     拉成「字 距 拉 开」的样子（源模板 algn="dist" 本意就是撑满一行）。 */
 .cover__subtitle {
   position: absolute;
   left: 258.5pt; top: 239.4721pt;

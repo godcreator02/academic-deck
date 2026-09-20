@@ -1,0 +1,7 @@
+# 依赖与构建产物不入仓
+node_modules/
+dist/
+
+# Vite / 编辑器杂物
+.vite/
+*.local

@@ -1,0 +1,27 @@
+{
+  "name": "academic-deck-react",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "学术风演示模板的 React 组件层：与 src/ 静态版消费同一套 CSS（tokens/deck/components/pages），几何单源不漂移",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "check:tokens": "node scripts/check-tokens.mjs"
+  },
+  "dependencies": {
+    "katex": "^0.18.7",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "typescript": "^5.9.0",
+    "vite": "^7.0.0"
+  }
+}
