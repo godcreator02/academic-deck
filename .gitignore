@@ -1,0 +1,7 @@
+# 解包与渲染底稿：随时可删，不进仓
+work/
+
+# 系统杂物
+Thumbs.db
+desktop.ini
+.DS_Store

@@ -1,0 +1,8 @@
+{
+  "kind": "独立项目",
+  "title": "学术HTML演示模板",
+  "purpose": "学术风网页演示模板（翻页 PPT）：纯 HTML+CSS 零依赖自研，不走 reveal.js/Slidev。方法论是先照抄后总结——逐页临摹西交大红黄 pptx（封面/封底/目录/正文标题行），再反提设计 tokens 与组件库，给组会/课堂讲义用。",
+  "status": "active",
+  "icon": "presentation",
+  "createdAt": "2026-09-20T15:40:30+08:00"
+}
