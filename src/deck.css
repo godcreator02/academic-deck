@@ -44,7 +44,9 @@ body {
 .slide.is-solo { visibility: visible; }
 
 /* ---------- 键盘提示 / 页码 ---------- */
-/* 放在舞台外的左下角：slide 内的 .pager 在右下角，两者不叠 */
+/* 放在舞台外的左下角：slide 内的 .pager 在右下角，两者不叠。
+   这是屏幕上的应用外框（打印时 display:none），不属于 slide 内容，
+   故不参与字号体系的 20pt 下限，仍按像素写。 */
 .hud {
   position: fixed;
   left: 14px;
@@ -63,7 +65,7 @@ body {
 
 /* ---------- 打印：一页一 slide ---------- */
 @page {
-  size: 1280px 720px;   /* 13.333in × 7.5in，16:9 横向 */
+  size: 960pt 540pt;    /* = 13.333in × 7.5in = 1280×720px，与 tokens 的画布同一个数 */
   margin: 0;
 }
 

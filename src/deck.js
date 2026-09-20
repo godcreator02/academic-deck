@@ -27,10 +27,14 @@
   }
   fillPagers();
 
-  /* ---- 缩放：整台 stage 等比缩放居中，保证 canvas 内部坐标永远是 1280×720 ---- */
+  /* ---- 缩放：整台 stage 等比缩放居中，保证 canvas 内部坐标永远是 960×540pt ---- */
   function fit() {
     var pad = 40;
-    var k = Math.min((innerWidth - pad) / 1280, (innerHeight - pad) / 720);
+    /* 用 offsetWidth/Height 取舞台的布局像素尺寸（不受 transform 影响）。
+       画布是 pt，在 96dpi 下 960pt = 1280px；不写死 1280，改画布时这段不用跟着改 */
+    var w = stage.offsetWidth || 1280;
+    var h = stage.offsetHeight || 720;
+    var k = Math.min((innerWidth - pad) / w, (innerHeight - pad) / h);
     stage.style.setProperty('--fit', Math.max(k, 0.1));
   }
 

@@ -6,77 +6,43 @@
 <link rel="stylesheet" href="../tokens.css">
 <link rel="stylesheet" href="../deck.css">
 <link rel="stylesheet" href="../components.css">
-<!-- 公式（决策 D3）：本地内置 KaTeX，不引 CDN -->
+<link rel="stylesheet" href="../pages.css">
 <link rel="stylesheet" href="../assets/katex/katex.min.css">
-<style>
-/* ==========================================================================
-   正文页（slides 4–8 每页复用的 chrome）
-   ⚠ 按用户口径：正文页**只抄顶部页题行与底部渐变条**这两条 chrome，
-     中间那几套版式（三图标条 / 五步时间轴 / 环形流程 / 左文右圆图 / 剪角卡片）不临摹。
-     中段用 components.css 的原子（prose / cols / box / figcap / pager）另行组版。
-   组件定义见 ../components.css，本文件只负责「摆位置」。
-   ========================================================================== */
-.doc { background: var(--c-white); }
-
-/* 中段容器（非临摹）：左右边距与页题左沿对齐，底部让开渐变条与脚注区 */
-.doc__body {
-  position: absolute;
-  left: var(--chrome-title-x);
-  right: var(--chrome-title-x);
-  top: 130px;
-  bottom: 96px;
-}
-</style>
 </head>
 <body>
 
 <div class="stage">
+  <!-- 正文页 chrome（页题行 + 双箭头 + 右上校徽 + 底部渐变条）+ 单栏正文
+       中段不临摹原模板版式，用 components.css 的原子另行组版 -->
   <section class="slide is-solo doc" data-page="4" data-total="9">
 
-    <!-- chrome ①：双箭头 + 页题 ［组件：.chev / .page-head］ -->
     <span class="chev chev--yellow"></span>
     <span class="chev chev--red"></span>
     <div class="page-head">研究背景与意义</div>
-
-    <!-- chrome ②：右上校徽 ［组件：.page-logo］ -->
     <img class="page-logo" src="../assets/logo-xjtu.png" alt="西安交通大学">
 
-    <!-- 中段：中性组会向材料 -->
-    <div class="doc__body cols prose">
-      <div>
-        <h3>一、问题的提出</h3>
-        <p>面向高维稀疏场景下的表示学习，现有方法普遍依赖手工先验，导致跨数据集迁移时性能衰减明显。本文从流形假设出发，把该问题形式化为一个受约束的结构保持问题<span class="fnref">1</span>。</p>
-        <div class="box box--def">
-          <span class="box__label">定义 1（结构保持）　</span>设 <em>X</em> 为样本集，若映射 <em>f</em> 在 <em>X</em> 上的像与原空间中的邻接关系一致，则称 <em>f</em> 是结构保持的。
-        </div>
-        <p>与既有工作相比，本文的贡献在于给出可解析的约束松弛条件，并证明松弛后的解在原始问题上的次优间隙有界。</p>
-        <div class="formula--block">
-          $$\min_{f\in\mathcal{H}}\ \sum_{i=1}^{n}\ell\bigl(f(x_i),y_i\bigr)+\lambda\lVert f\rVert_{\mathcal{H}}^2$$
-          <span class="formula__no">(1)</span>
-        </div>
-        <p>其中正则项系数 $\lambda>0$ 控制假设空间复杂度，其取值对间隙界的影响在第四章讨论。</p>
-      </div>
-      <div>
-        <h3>二、本文安排</h3>
-        <ul class="points">
-          <li class="point"><span class="point__no">1</span>第二章梳理相关工作的两条主线与各自的失效条件；</li>
-          <li class="point"><span class="point__no">2</span>第三章给出模型形式化、松弛条件与收敛性证明；</li>
-          <li class="point"><span class="point__no">3</span>第四章在三个公开数据集上验证界的紧致程度；</li>
-          <li class="point"><span class="point__no">4</span>第五章总结局限并讨论后续可扩展方向。</li>
-        </ul>
-        <p>若该界可被实测验证，则可省去每轮调参中大量的交叉验证开销，对实际部署有直接价值。</p>
-      </div>
-    </div>
+    <!-- 单栏满宽：772.5774pt → 每行 38 字（20pt / 行距 1.5） -->
+    <div class="doc__body prose">
+      <h3>一、问题的提出</h3>
+      <p>面向高维稀疏场景的表示学习，现有方法普遍依赖手工先验，跨数据集迁移时性能衰减明显。本文从流形假设出发，把该问题形式化为受约束的结构保持问题<span class="fnref">1</span>。</p>
 
-    <p class="figcap"><span class="figcap__no">图 1</span>正文页 chrome 示意（本页中段为中性示例材料，非原模板版式）</p>
+      <div class="box box--def">
+        <span class="box__label">定义 1（结构保持）　</span>设 <em>X</em> 为样本集，若映射 <em>f</em> 在 <em>X</em> 上的像与原空间的邻接关系一致，则称 <em>f</em> 是结构保持的。
+      </div>
+
+      <div class="formula--block">
+        $$\hat{f}=\arg\min_{f\in\mathcal{H}}\ \frac{1}{n}\sum_{i=1}^{n}\ell\bigl(f(x_i),y_i\bigr)+\lambda\lVert f\rVert_{\mathcal{H}}^{2}$$
+        <span class="formula__no">(1)</span>
+      </div>
+
+      <p>其中正则项系数 $\lambda>0$ 控制假设空间复杂度。与既有工作相比，本文给出可解析的约束松弛条件，并证明松弛后的解在原始问题上的次优间隙有界。</p>
+    </div>
 
     <div class="footnotes">
-      <p><span class="fnref">1</span>　此处为脚注区示例，字号与灰阶取自页面实测值的 12pt / #808080。</p>
+      <p><span class="fnref">1</span>　脚注区示例：字号取辅助档 16pt（D4：元信息允许低于 20pt）。</p>
     </div>
 
-    <!-- chrome ③：底部渐变条 ［组件：.page-bar］ -->
     <div class="page-bar"></div>
-    <!-- 页码 ［组件：.pager］ -->
     <div class="pager"><span class="pager__cur"></span><span class="pager__sep">/</span><span class="pager__total"></span></div>
 
   </section>

@@ -6,75 +6,19 @@
 <link rel="stylesheet" href="../tokens.css">
 <link rel="stylesheet" href="../deck.css">
 <link rel="stylesheet" href="../components.css">
-<style>
-/* ==========================================================================
-   目录页（临摹第 2 页）
-   图层：slideLayout3（左栏底图+蒙版+徽标、右上校徽）在下，slide2（四条胶囊、
-   四个序号圆、右上校徽）在上。两边都画了校徽，这里都照抄。
-   占位文字「单击输入文字」按 BRIEF「抄皮不抄占位内容」换成中性组会向章节名。
-   组件定义见 ../components.css，本文件只负责「摆位置」。
-   ========================================================================== */
-.toc { background: var(--c-white); }
-
-/* 图片 2 | rId2 = image1.png | 组合1 内 off(-137160,-13335) ext(3657600,6858000)
-   blipFill srcRect l="35450" r="28977" → 左右各裁掉 35.45% / 28.977%，只留中间 35.573%
-   再拉伸填满 384.2×720。用「容器 overflow:hidden + 整图放大偏移」等价复刻：
-     容器 = 图片框本体 (-14.4,-1.4) 384.2×720（PPT 里超出图片框的部分被裁掉，必须复刻）
-     整图宽 = 384.2 / 0.35573 = 1080.0px（该比例下 1080:720 = 1.5 = 原图 3713:2475，零变形）
-     整图左 = -0.35450 × 1080 = -382.86px（相对容器）
-   注意：不能换 object-fit（cover 只能居中裁，复刻不出指定裁切框） */
-.toc__strip {
-  position: absolute;
-  left: -14.4px; top: -1.4px; width: 384.2px; height: 720px;
-  overflow: hidden;
-}
-.toc__strip > img {
-  position: absolute;
-  left: -382.86px; top: 0; width: 1080px; height: 720px;
-}
-
-/* 矩形 3 | 同矩形，gradFill θ=90°：0=#FDEAC4 → 15000=bg1 → 100000=bg1 alpha0 */
-.toc__veil {
-  position: absolute;
-  left: -14.4px; top: -1.4px; width: 384.2px; height: 720px;
-  background: var(--g-veil-toc);
-}
-
-/* 椭圆 5 | off(2228850,2181225) ext(2727325,2659388) = (234,228.9) 286.1×279 */
-.toc__badge { left: 234px; top: 228.9px; width: 286.1px; height: 279px; }
-/* 椭圆 6 | off(2408074,2358678) ext(2370071,2302347) = (252.7,247.6) 248.8×241.7
-   ⚠ algn=ctr → 描边外溢半线宽，路径半径 = 边长/2；viewBox 必须与元素框 1:1 */
-.toc__ring { left: 252.7px; top: 247.6px; width: 248.8px; height: 241.7px; }
-
-/* KSO_Shape | off(6207095, 1933284+间距) ext(4530755,584775) = (651.7, …) 475.7×61.4
-   四个 y 原值：203 / 307 / 411.1 / 515.2（间距 104.07/104.1/104.1） */
-.toc__item--1 { left: 651.7px; top: 203px; }
-.toc__item--2 { left: 651.7px; top: 307px; }
-.toc__item--3 { left: 651.7px; top: 411.1px; }
-.toc__item--4 { left: 651.7px; top: 515.2px; }
-
-/* 椭圆 18/20/22/24 | Ø50 | 原值 y：208.7 / 312.8 / 421.3 / 525.4（注意 3→4 间距 104.1） */
-.toc__num--1 { left: 585.8px; top: 208.7px; }
-.toc__num--2 { left: 585.8px; top: 312.8px; }
-.toc__num--3 { left: 585.8px; top: 421.3px; }
-.toc__num--4 { left: 585.8px; top: 525.4px; }
-
-/* 右上校徽：版式里那份（slideLayout3 Picture 2 | off(9766666,236000) ext(1645045,440000)）
-   被本页那份完全压住（实测 PPT 与只画一份的渲染墨迹 bbox 完全一致），故不复刻 */
-.toc__logo { left: 967.2px; top: 33.6px; width: 278.7px; height: 74.6px; }
-</style>
+<link rel="stylesheet" href="../pages.css">
 </head>
 <body>
 
 <div class="stage">
   <section class="slide is-solo toc">
 
-    <!-- ---- slideLayout3：左栏底图 + 蒙版 + 「目录」徽标 ---- -->
+    <!-- slideLayout3：左栏底图（带 srcRect 裁切）+ 蒙版 + 「目录」徽标 -->
     <div class="toc__strip"><img src="../assets/bg-toc.png" alt=""></div>
     <div class="toc__veil"></div>
 
     <div class="toc-badge toc__badge">目录</div>
-    <svg class="toc-ring toc__ring" viewBox="0 0 248.8 241.7" aria-hidden="true">
+    <svg class="toc-ring toc__ring" viewBox="0 0 186.603 181.2571" aria-hidden="true">
       <defs>
         <!-- 0% 在右下(SE)、100% 在左上(NW)：对应 OOXML lin ang=225°（规则给 315.8°） -->
         <linearGradient id="ringGrad" x1="100%" y1="100%" x2="0%" y2="0%">
@@ -82,11 +26,12 @@
           <stop offset="100%" stop-color="#C00000"/>
         </linearGradient>
       </defs>
-      <ellipse cx="124.4" cy="120.85" rx="124.4" ry="120.85"
-               fill="none" stroke="url(#ringGrad)" stroke-width="6"/>
+      <!-- algn=ctr → 路径半径 = 边长/2；viewBox 与元素框 1:1，外溢靠 overflow:visible -->
+      <ellipse cx="93.3015" cy="90.62855" rx="93.3015" ry="90.62855"
+               fill="none" stroke="url(#ringGrad)" stroke-width="4.5"/>
     </svg>
 
-    <!-- ---- slide2：四个序号 + 四条胶囊 ---- -->
+    <!-- slide2：四个序号 + 四条胶囊（占位文字换成中性组会向章节名） -->
     <div class="toc-num toc__num--1">1</div>
     <div class="toc-num toc__num--2">2</div>
     <div class="toc-num toc__num--3">3</div>

@@ -6,26 +6,17 @@
 <link rel="stylesheet" href="../tokens.css">
 <link rel="stylesheet" href="../deck.css">
 <link rel="stylesheet" href="../components.css">
-<style>
-/* ==========================================================================
-   章节过渡页（临摹第 3 页）
-   图层照抄 slide3.xml spTree 顺序：
-     矩形 4（右侧大标题）→ 标题 1（下方小字说明）→ 组合 8［底图 + 橙色蒙版 +
-     Part 渐变条 + Part 01 文字］
-   占位文字按 BRIEF 换成中性组会向材料。组件定义见 ../components.css。
-   ========================================================================== */
-.section { background: var(--c-white); }
-</style>
+<link rel="stylesheet" href="../pages.css">
 </head>
 <body>
 
 <div class="stage">
   <section class="slide is-solo section">
 
+    <!-- 图层照抄 slide3.xml：矩形 4（右侧大标题）→ 标题 1（小字说明）→ 组合 8（图片带） -->
     <div class="band__title">研究背景与意义</div>
     <div class="band__lead">本章说明课题来源、研究意义，以及本文要解决的核心问题与整体安排。</div>
 
-    <!-- 组合 8：图片带 + 蒙版 + Part 条 + Part 文字（几何全在 components.css 里） -->
     <div class="band"><img class="band__img" src="../assets/bg-section.jpg" alt=""></div>
     <div class="band__wash"></div>
     <div class="band__bar"></div>
