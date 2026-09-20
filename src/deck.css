@@ -44,9 +44,10 @@ body {
 .slide.is-solo { visibility: visible; }
 
 /* ---------- 键盘提示 / 页码 ---------- */
+/* 放在舞台外的左下角：slide 内的 .pager 在右下角，两者不叠 */
 .hud {
   position: fixed;
-  right: 14px;
+  left: 14px;
   bottom: 10px;
   z-index: 10;
   padding: 4px 12px;

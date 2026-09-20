@@ -15,6 +15,18 @@
   var cur = 0;
   slides.forEach(function (s, n) { if (s.classList.contains('is-active')) cur = n; });
 
+  /* ---- 每页内的页码：一次填满所有页（只填当前页的话打印出来其它页会是空的） ----
+     单页临摹稿可用 data-page / data-total 覆盖（例如正文页固定在源模板中的 4/9） */
+  function fillPagers() {
+    slides.forEach(function (s, i) {
+      var c = s.querySelector('.pager__cur');
+      var t = s.querySelector('.pager__total');
+      if (c) c.textContent = s.getAttribute('data-page') || (i + 1);
+      if (t) t.textContent = s.getAttribute('data-total') || slides.length;
+    });
+  }
+  fillPagers();
+
   /* ---- 缩放：整台 stage 等比缩放居中，保证 canvas 内部坐标永远是 1280×720 ---- */
   function fit() {
     var pad = 40;

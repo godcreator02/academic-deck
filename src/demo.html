@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>学术风演示模板 — 自指视觉规范</title>
+<!--
+  这份 deck 就是模板自己的视觉规范：规范与 demo 合一，漂移无处可藏。
+  用 ← → / 空格 / PgUp PgDn / Home End 翻页，F 全屏；浏览器直接打印即得 PDF
+  （@page 横向 1280×720px，一页一 slide，见 deck.css）。
+  全部版式与原子来自 components.css —— 与 src/pages/ 的临摹稿共用同一套组件。
+-->
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="deck.css">
+<link rel="stylesheet" href="components.css">
+<style>
+/* style-guide 专用原子（只服务这份自指规范，不进 components.css） */
+.swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px 18px; }
+.sw { display: flex; gap: 12px; align-items: flex-start; }
+.sw__chip {
+  width: 58px; height: 58px; flex: none; border-radius: 7px;
+  border: 1px solid rgba(0, 0, 0, .08);
+}
+.sw__meta { font-size: 12px; line-height: 1.45; }
+.sw__hex { font-family: var(--f-pill); font-weight: 700; letter-spacing: .02em; }
+.sw__use { color: var(--c-gray-500); }
+.sw__n { color: var(--c-red-deep); font-weight: 500; }
+
+.typerow { display: grid; grid-template-columns: 92px 1fr; align-items: baseline; gap: 12px; margin-bottom: 9px; }
+.typerow__spec { font-family: var(--f-pill); font-size: 12px; color: var(--c-gray-500); }
+.typerow__demo { font-family: var(--f-title); font-weight: 700; color: var(--c-ink); }
+
+.spec { width: 100%; border-collapse: collapse; font-family: var(--f-body); font-size: 12px; }
+.spec th, .spec td { text-align: left; padding: 5px 8px; border-bottom: 1px solid #EFEFEF; }
+.spec th { font-weight: 500; color: var(--c-gray-500); }
+.spec td:first-child { font-family: var(--f-pill); font-weight: 700; color: var(--c-red-deep); white-space: nowrap; }
+
+.todo { border-left-color: var(--c-yellow) !important; }
+.todo .box__label { color: var(--c-amber); }
+.gap { margin-top: 16px; }
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+  <!-- ============ 1 封面 ============ -->
+  <section class="slide is-active cover">
+    <img class="cover-bg" src="assets/bg-cover.jpeg" alt="">
+    <div class="cover-veil"></div>
+    <img class="brandmark" style="left:489.2px;top:86.9px" src="assets/logo-xjtu.png" alt="西安交通大学">
+    <div class="motto" style="position:absolute;left:115.7px;top:206.9px;width:1068.9px;height:74.3px;line-height:74.3px">精勤求学  敦笃励志  果毅力行  忠恕任事</div>
+    <div style="position:absolute;left:344.7px;top:319.3px;width:546.7px;height:38.8px;padding:0 9.6px;font-family:var(--f-title);font-size:var(--fs-18);font-weight:700;line-height:38.8px;color:var(--c-red-true);text-align:justify;text-align-last:justify">西交大红黄学术风 · 自指视觉规范</div>
+    <span class="hairline" style="left:251.3px;top:413.8px"></span>
+    <div style="position:absolute;left:476.7px;top:394.8px;width:326.7px;height:38.8px;padding:0 9.6px;font-family:var(--f-title);font-size:var(--fs-18);font-weight:700;line-height:38.8px;color:var(--c-red-deep);text-align:justify;text-align-last:justify">本文档即模板本身</div>
+    <span class="hairline" style="left:820.8px;top:414.2px"></span>
+  </section>
+
+  <!-- ============ 2 目录 ============ -->
+  <section class="slide toc">
+    <div style="position:absolute;left:-14.4px;top:-1.4px;width:384.2px;height:720px;overflow:hidden">
+      <img style="position:absolute;left:-382.86px;top:0;width:1080px;height:720px" src="assets/bg-toc.png" alt="">
+    </div>
+    <div style="position:absolute;left:-14.4px;top:-1.4px;width:384.2px;height:720px;background:var(--g-veil-toc)"></div>
+    <div class="toc-badge" style="left:234px;top:228.9px;width:286.1px;height:279px">目录</div>
+    <svg class="toc-ring" style="left:252.7px;top:247.6px;width:248.8px;height:241.7px" viewBox="0 0 248.8 241.7" aria-hidden="true">
+      <defs><linearGradient id="rg" x1="100%" y1="100%" x2="0%" y2="0%">
+        <stop offset="0%" stop-color="#FFC000"/><stop offset="100%" stop-color="#C00000"/>
+      </linearGradient></defs>
+      <ellipse cx="124.4" cy="120.85" rx="124.4" ry="120.85" fill="none" stroke="url(#rg)" stroke-width="6"/>
+    </svg>
+    <div class="toc-num" style="left:585.8px;top:208.7px">1</div>
+    <div class="toc-num" style="left:585.8px;top:312.8px">2</div>
+    <div class="toc-num" style="left:585.8px;top:421.3px">3</div>
+    <div class="toc-num" style="left:585.8px;top:525.4px">4</div>
+    <div class="toc-item" style="left:651.7px;top:203px">色彩与用色</div>
+    <div class="toc-item" style="left:651.7px;top:307px">字体与字阶</div>
+    <div class="toc-item" style="left:651.7px;top:411.1px">版式与几何</div>
+    <div class="toc-item" style="left:651.7px;top:515.2px">组件清单</div>
+    <img class="brandmark" style="left:967.2px;top:33.6px;width:278.7px;height:74.6px" src="assets/logo-xjtu.png" alt="西安交通大学">
+  </section>
+
+  <!-- ============ 3 章节 Part 01 ============ -->
+  <section class="slide section">
+    <div class="band__title">色彩与用色</div>
+    <div class="band__lead">全部分色实测自源模板页面硬编码，未做任何"设计归纳"。</div>
+    <div class="band"><img class="band__img" src="assets/bg-section.jpg" alt=""></div>
+    <div class="band__wash"></div>
+    <div class="band__bar"></div>
+    <div class="band__part">Part  01</div>
+  </section>
+
+  <!-- ============ 4 色板 ============ -->
+  <section class="slide doc">
+    <span class="chev chev--yellow"></span><span class="chev chev--red"></span>
+    <div class="page-head">色板（页面 srgbClr 实测）</div>
+    <img class="page-logo" src="assets/logo-xjtu.png" alt="西安交通大学">
+    <div style="position:absolute;left:124.9px;right:124.9px;top:168px">
+      <div class="swatches">
+        <div class="sw"><div class="sw__chip" style="background:#E49E3F"></div><div class="sw__meta"><div class="sw__hex">#E49E3F</div><div class="sw__use">橙黄 · 二号主色</div><div class="sw__use">icon / 强调 · <span class="sw__n">19</span></div></div></div>
+        <div class="sw"><div class="sw__chip" style="background:#C86142"></div><div class="sw__meta"><div class="sw__hex">#C86142</div><div class="sw__use">砖红 · 三红之一</div><div class="sw__use">图标底 / 要点条 · <span class="sw__n">14</span></div></div></div>
+        <div class="sw"><div class="sw__chip" style="background:#C00000"></div><div class="sw__meta"><div class="sw__hex">#C00000</div><div class="sw__use">深红 · 主红候选 A</div><div class="sw__use">页眉/序号/细线 · <span class="sw__n">10</span></div></div></div>
+        <div class="sw"><div class="sw__chip" style="background:#C92B2F"></div><div class="sw__meta"><div class="sw__hex">#C92B2F</div><div class="sw__use">正红 · 主红候选 B</div><div class="sw__use">封面副标题 · <span class="sw__n">4</span></div></div></div>
+        <div class="sw"><div class="sw__chip" style="background:#FFC000"></div><div class="sw__meta"><div class="sw__hex">#FFC000</div><div class="sw__use">标黄 · 高亮</div><div class="sw__use">页眉箭头/渐变 · <span class="sw__n">5</span></div></div></div>
+        <div class="sw"><div class="sw__chip" style="background:#FDEAC4"></div><div class="sw__meta"><div class="sw__hex">#FDEAC4</div><div class="sw__use">奶黄 · 浅暖底</div><div class="sw__use">封面/封底顶部 · <span class="sw__n">2</span></div></div></div>
+        <div class="sw"><div class="sw__chip" style="background:#002060"></div><div class="sw__meta"><div class="sw__hex">#002060</div><div class="sw__use">藏青 · 重字强调</div><div class="sw__use">定义类 / 投影色 · <span class="sw__n">4</span></div></div></div>
+        <div class="sw"><div class="sw__chip" style="background:#20307D"></div><div class="sw__meta"><div class="sw__hex">#20307D</div><div class="sw__use">藏青（浅）</div><div class="sw__use">重字 · <span class="sw__n">2</span></div></div></div>
+        <div class="sw"><div class="sw__chip" style="background:#F6F6F6"></div><div class="sw__meta"><div class="sw__hex">#F6F6F6</div><div class="sw__use">浅灰底块</div><div class="sw__use">卡片底 · <span class="sw__n">3</span></div></div></div>
+        <div class="sw"><div class="sw__chip" style="background:#95A5A6"></div><div class="sw__meta"><div class="sw__hex">#95A5A6</div><div class="sw__use">次要信息</div><div class="sw__use">图注 / 页码 · <span class="sw__n">4</span></div></div></div>
+        <div class="sw"><div class="sw__chip" style="background:#404040"></div><div class="sw__meta"><div class="sw__hex">#404040</div><div class="sw__use">正文重灰</div><div class="sw__use">封底副行 · <span class="sw__n">1</span></div></div></div>
+        <div class="sw"><div class="sw__chip" style="background:#3B5463"></div><div class="sw__meta"><div class="sw__hex">#3B5463</div><div class="sw__use">蓝灰</div><div class="sw__use">次要线条 · <span class="sw__n">2</span></div></div></div>
+      </div>
+    </div>
+    <p class="figcap" style="position:absolute;left:124.9px;right:124.9px;top:470px"><span class="figcap__no">图 1</span>方括号内数字为源模板中该色值的出现次数</p>
+    <div class="page-bar"></div>
+    <div class="pager"><span class="pager__cur"></span><span class="pager__sep">/</span><span class="pager__total"></span></div>
+  </section>
+
+  <!-- ============ 5 用色规则 + 待拍板 ============ -->
+  <section class="slide doc">
+    <span class="chev chev--yellow"></span><span class="chev chev--red"></span>
+    <div class="page-head">用色规则与待定项</div>
+    <img class="page-logo" src="assets/logo-xjtu.png" alt="西安交通大学">
+    <div class="cols prose" style="position:absolute;left:124.9px;right:124.9px;top:136px;bottom:150px">
+      <div>
+        <h3>已成规则</h3>
+        <ul class="points">
+          <li class="point"><span class="point__no">1</span>页眉双箭头固定为 <strong>红 #C00000 压黄 #FFC000</strong>，左红右黄；</li>
+          <li class="point"><span class="point__no">2</span>底部渐变条 <strong>#C00000 → #FFC000</strong>，一维水平、中心对称；</li>
+          <li class="point"><span class="point__no">3</span>强调只用暖色（红/砖红/橙黄），冷色仅藏青且限于定义类重字；</li>
+          <li class="point"><span class="point__no">4</span>灰阶承担全部次要信息，不参与强调。</li>
+        </ul>
+      </div>
+      <div>
+        <h3>待拍板（收敛决策点）</h3>
+        <div class="box todo">
+          <span class="box__label">主红取哪一个　</span>深红 #C00000 与正红 #C92B2F 都在源模板中出现，用量 10 : 4。前者庄重、后者活泼，需定一个作主红。
+        </div>
+        <div class="box todo">
+          <span class="box__label">字体怎么带　</span>系统栈（微软雅黑 + 思源黑体，依赖本机安装）还是自带子集 woff2（体积换一致）。
+        </div>
+        <div class="box todo">
+          <span class="box__label">KaTeX 带不带　</span>组会/讲义公式多，但要引入一份外部依赖，与"零依赖"底座冲突。
+        </div>
+      </div>
+    </div>
+    <div class="page-bar"></div>
+    <div class="pager"><span class="pager__cur"></span><span class="pager__sep">/</span><span class="pager__total"></span></div>
+  </section>
+
+  <!-- ============ 6 章节 Part 02 ============ -->
+  <section class="slide section">
+    <div class="band__title">字体与字阶</div>
+    <div class="band__lead">字体实测出现次数与页面字号并集，未做取舍。</div>
+    <div class="band"><img class="band__img" src="assets/bg-section.jpg" alt=""></div>
+    <div class="band__wash"></div>
+    <div class="band__bar"></div>
+    <div class="band__part">Part  02</div>
+  </section>
+
+  <!-- ============ 7 字体与字阶 ============ -->
+  <section class="slide doc">
+    <span class="chev chev--yellow"></span><span class="chev chev--red"></span>
+    <div class="page-head">字体与字阶</div>
+    <img class="page-logo" src="assets/logo-xjtu.png" alt="西安交通大学">
+    <div class="cols" style="position:absolute;left:124.9px;right:124.9px;top:134px">
+      <div>
+        <div class="typerow"><span class="typerow__spec">32pt 页题</span><span class="typerow__demo" style="font-size:var(--fs-32)">学术汇报页题</span></div>
+        <div class="typerow"><span class="typerow__spec">28pt 目录</span><span class="typerow__demo" style="font-size:var(--fs-28)">目录条目文字</span></div>
+        <div class="typerow"><span class="typerow__spec">24pt 次要</span><span class="typerow__demo" style="font-size:var(--fs-24)">谢谢各位专家</span></div>
+        <div class="typerow"><span class="typerow__spec">18pt 副题</span><span class="typerow__demo" style="font-size:var(--fs-18)">汇报人：网络信息中心</span></div>
+        <div class="typerow"><span class="typerow__spec">16pt 小节</span><span class="typerow__demo" style="font-size:var(--fs-16)">一、问题的提出</span></div>
+        <div class="typerow"><span class="typerow__spec">12pt 正文</span><span class="typerow__demo" style="font-size:var(--fs-12);font-weight:400">正文小字与图注、脚注用同一阶</span></div>
+      </div>
+      <div class="prose">
+        <h3>实测字体（出现次数）</h3>
+        <table class="spec">
+          <tr><th>字体</th><th>角色</th><th>次数</th></tr>
+          <tr><td>微软雅黑</td><td>标题 / 正文兜底</td><td>86</td></tr>
+          <tr><td>思源黑体 CN Medium</td><td>骨架（小节题）</td><td>70</td></tr>
+          <tr><td>思源黑体 CN Normal</td><td>骨架（正文）</td><td>63</td></tr>
+          <tr><td>思源黑体</td><td>骨架</td><td>38</td></tr>
+          <tr><td>Arial</td><td>拉丁混排</td><td>91</td></tr>
+          <tr><td>Arial Black</td><td>Part 01 大号数字</td><td>—</td></tr>
+          <tr><td>Tahoma</td><td>目录条目拉丁</td><td>—</td></tr>
+        </table>
+        <p style="margin-top:12px">学术感来自<strong>黑体 + 大留白 + 红黄点缀</strong>，不是衬线。故模板一律不引衬线体。</p>
+      </div>
+    </div>
+    <div class="page-bar"></div>
+    <div class="pager"><span class="pager__cur"></span><span class="pager__sep">/</span><span class="pager__total"></span></div>
+  </section>
+
+  <!-- ============ 8 版式几何 + 组件清单 ============ -->
+  <section class="slide doc">
+    <span class="chev chev--yellow"></span><span class="chev chev--red"></span>
+    <div class="page-head">版式几何与组件</div>
+    <img class="page-logo" src="assets/logo-xjtu.png" alt="西安交通大学">
+    <div class="cols" style="position:absolute;left:124.9px;right:124.9px;top:132px;bottom:120px">
+      <div class="prose">
+        <h3>正文页 chrome 几何（1280×720 逻辑画布）</h3>
+        <table class="spec">
+          <tr><th>元素</th><th>x, y</th><th>w × h</th></tr>
+          <tr><td>页题框</td><td>124.9, 44.2</td><td>277.9 × 61.4</td></tr>
+          <tr><td>红箭头</td><td>54.5, 58</td><td>35.5 × 32.5</td></tr>
+          <tr><td>黄箭头</td><td>84, 58</td><td>35 × 32.5</td></tr>
+          <tr><td>右上校徽</td><td>1025.4, 41.2</td><td>221.8 × 59.4</td></tr>
+          <tr><td>底部渐变条</td><td>0, 711.5</td><td>1280 × 7.8</td></tr>
+        </table>
+        <p style="margin-top:10px">换算是 <em>1pt = 4/3 px</em>、<em>1px = 9525 EMU</em>；画布 1280×720 对应母版的 960×540<strong>pt</strong>（不是 px）。</p>
+      </div>
+      <div class="prose">
+        <h3>组件清单（components.css）</h3>
+        <ul>
+          <li><strong>页眉</strong>　.chev--red/--yellow、.page-head、.page-logo</li>
+          <li><strong>页码</strong>　.pager</li>
+          <li><strong>底部渐变条</strong>　.page-bar</li>
+          <li><strong>目录</strong>　.toc-badge、.toc-ring、.toc-item、.toc-num</li>
+          <li><strong>章节页</strong>　.band、.band__wash、.band__bar、.band__part、.band__title、.band__lead</li>
+          <li><strong>首尾页</strong>　.motto、.wordmark、.wordmark-sub、.brandmark、.hairline</li>
+          <li><strong>定理框</strong>　.box--theorem/--def/--lemma/--remark</li>
+          <li><strong>要点条</strong>　.points、.point</li>
+          <li><strong>icon 块</strong>　.iconblk</li>
+          <li><strong>图注 / 脚注</strong>　.figcap、.fnref、.footnotes</li>
+        </ul>
+        <div class="box box--theorem gap"><span class="box__label">定理 1（示例）　</span>该框的 3.8px 彩条宽度直接取自源模板 slide7 的两条色条实测值。</div>
+        <p class="figcap" style="text-align:left;margin-top:10px"><span class="figcap__no">图 2</span>以上均可在 src/pages/ 的临摹稿中看到原始用法</p>
+      </div>
+    </div>
+    <div class="page-bar"></div>
+    <div class="pager"><span class="pager__cur"></span><span class="pager__sep">/</span><span class="pager__total"></span></div>
+  </section>
+
+  <!-- ============ 9 封底 ============ -->
+  <section class="slide thanks">
+    <img class="thanks-bg" src="assets/bg-cover.jpeg" alt="">
+    <div class="cover-veil"></div>
+    <svg class="thanks__arc" style="position:absolute;overflow:visible;left:691.3px;top:211.2px;width:207.6px;height:207.6px"
+         viewBox="0 0 207.6 207.6" aria-hidden="true">
+      <circle cx="103.8" cy="103.8" r="102.7" fill="none" stroke="#595959" stroke-width="2.519" stroke-dasharray="270.85 105.23"/>
+      <circle cx="103.8" cy="103.8" r="102.7" fill="none" stroke="#E49E3F" stroke-width="2.186" stroke-dasharray="270.85 105.23"/>
+    </svg>
+    <div class="wordmark" style="left:371.6px;top:244.7px;width:486.9px;height:138.9px">THANKS</div>
+    <div class="wordmark-sub" style="left:392.2px;top:363px;width:306.9px;height:48.5px;line-height:48.5px">谢谢各位专家</div>
+    <img class="brandmark" style="left:489.2px;top:90.2px" src="assets/logo-xjtu.png" alt="西安交通大学">
+  </section>
+
+</div>
+
+<div class="hud">1<span class="hud__sep">/</span>9</div>
+<script src="deck.js"></script>
+</body>
+</html>
