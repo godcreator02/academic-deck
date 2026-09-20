@@ -463,9 +463,62 @@
 }
 .footnotes p { margin: 0 0 3px; }
 
+/* 7.6 公式
+   ［决策 D3］渲染交给本地内置的 KaTeX（assets/katex/，见 deck.js 末尾挂载）；
+        这两个类只管「摆放与编号」，不参与排版质量本身。
+        独立公式用 .formula--block（居中 + 右侧编号），行内直接用 $...$ 即可。 */
+.formula { font-family: var(--f-math); }
+.formula--block {
+  position: relative;
+  margin: 14px 0;
+  text-align: center;
+}
+.formula--block .katex-display { margin: 0; }   /* KaTeX display 自带外边距，收掉免双份 */
+.formula--block .katex { font-size: 1.08em; }
+.formula__no {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--f-pill);
+  font-size: var(--fs-12);
+  color: var(--c-gray-500);
+}
+
+/* 7.7 代码
+   ［决策 D2］字体用常见等宽栈；配色取自模板色板（浅暖灰底 #F6F6F6 + 藏青重字），
+        左侧 3.8px 彩条沿用 .box 的同一条形状语言（源 slide7 实测宽）。 */
+.code {
+  font-family: var(--f-mono);
+  font-size: .92em;
+  padding: 1px 5px;
+  border: 1px solid #ECECEC;
+  border-radius: 3px;
+  background: var(--c-gray-100);
+  color: var(--c-navy);
+}
+.pre {
+  margin: 0 0 14px;
+  padding: 12px 16px;
+  overflow: auto;
+  background: var(--c-gray-100);
+  border: 1px solid #EDEDED;
+  border-left: 3.8px solid var(--c-blue-gray);
+  border-radius: 0 6px 6px 0;
+  font-family: var(--f-mono);
+  font-size: var(--fs-12);
+  line-height: 1.5;
+  color: var(--c-ink);
+  white-space: pre;
+}
+.pre .k { color: var(--c-navy); }        /* 关键字 / 强调 */
+.pre .s { color: var(--c-brick); }       /* 字符串 */
+.pre .c { color: var(--c-gray-500); }    /* 注释 */
+
 /* ==========================================================================
    8. 正文排版基元
-   ［提炼］字号/行距取自页面实测：正文 12pt、lnSpc 150%；小节题 16pt 思源黑体 Medium
+   ［临摹］字号/行距取自页面实测：正文 12pt、lnSpc 150%；小节题 16pt
+   ［决策 D2］字体统一走 --f-body（= 微软雅黑）
    ========================================================================== */
 .prose {
   font-family: var(--f-body);

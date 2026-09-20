@@ -1,9 +1,21 @@
 /* ==========================================================================
    tokens.css — 设计令牌
-   本文件的值全部是「照抄」来的：来源是 source/2025redyellownew.pptx 解包后的
-   ppt/slides/*.xml、ppt/slideLayouts/*.xml、ppt/slideMasters/*.xml 页面硬编码值，
-   不是统计推断、也不是设计取舍。每个令牌后面标了正本出处。
+   本文件的值分两类，注释里逐条标明：
+     ［临摹］= 照抄 source/2025redyellownew.pptx 里的原值（页面硬编码，非统计推断）
+     ［决策］= 临摹完成后由用户拍板的口味决定（见下方 DECISIONS）
    换算：1pt = 4/3 px；1px = 9525 EMU。逻辑画布 1280×720（= 960×540pt @96dpi）。
+
+   ── DECISIONS（2026-09-20 用户拍板，勿翻案）─────────────────────────────
+   D1 主红：**不区分主次**。#C00000 与 #C92B2F 并存，各自沿用源模板的用法：
+      #C00000 → 页眉箭头 / 目录序号圆 / 金环收尾 / 渐变条中心 / Part 条起点 /
+                封面细线 / 页题强调；#C92B2F → 封面副标题。后续自行加内容时
+      "就近沿用"取色，不强行统一。
+   D2 字体：**正文与西文统一固定为微软雅黑**（不再以思源黑体做正文骨架）；
+      代码用常见等宽字体栈；公式交给 KaTeX 自带数学字体。
+      见 --f-body / --f-mono / --f-math。
+   D3 公式：**带 KaTeX，含自动渲染 JS**，且本地内置（不引 CDN，双击即可用）。
+      见 assets/katex/ 与 deck.js 末尾的 renderMathInElement 挂载。
+   ─────────────────────────────────────────────────────────────────────
    ========================================================================== */
 
 :root {
@@ -12,11 +24,11 @@
   --canvas-h: 720px;    /* PageSetup.SlideHeight 540pt */
   --pt: 1.3333px;       /* 1pt，用于把字号原值写成 pt×系数 */
 
-  /* ---------- 色板（页面 srgbClr 实测，按角色） ---------- */
-  --c-red-deep:   #C00000;  /* 深红：主红候选 A。页眉 chevron、目录序号、金环收尾、
-                               底部渐变条中心、Part 条起点、封面细线、正文页题 */
-  --c-red-true:   #C92B2F;  /* 正红：主红候选 B。封面副标题「…汇报答辩PPT模版」 */
-  --c-brick:      #C86142;  /* 砖红：三红之一。THANKS 渐起点、图标底、要点条 */
+  /* ---------- 色板 ［临摹］（页面 srgbClr 实测，按角色） ---------- */
+  --c-red-deep:   #C00000;  /* 深红（D1：与正红并存、不分主次）。页眉 chevron、目录序号、
+                               金环收尾、渐变条中心、Part 条起点、封面细线、页题强调 */
+  --c-red-true:   #C92B2F;  /* 正红（D1：同上）。封面副标题「…汇报答辩PPT模版」 */
+  --c-brick:      #C86142;  /* 砖红：THANKS 渐起点、图标底、要点条 */
   --c-amber:      #E49E3F;  /* 橙黄：二号主色。Part 条终点、章节页蒙版、封底空心弧 */
   --c-yellow:     #FFC000;  /* 标黄：页眉第二枚 chevron、金环起点、渐变条边缘 */
   --c-cream:      #FDEAC4;  /* 奶黄：封面/封底顶部奶油底、目录左栏顶部 */
@@ -31,12 +43,21 @@
   --c-white:      #FFFFFF;  /* theme bg1 = lt1 window */
   --c-hairline:   #595959;  /* 封底空心弧描边 */
 
-  /* ---------- 字体（typeface 实测；收敛决策点见 BRIEF 第 6 条） ---------- */
+  /* ---------- 字体 ----------
+     ［临摹］实测骨架是「思源黑体 CN Medium/Normal + 微软雅黑兜底 + Arial 混排」，
+             装饰位 Arial Black / Tahoma。
+     ［决策 D2］正文与西文统一固定微软雅黑（不引思源黑体做正文骨架，避免
+             别人机器没装时字重跳档）；装饰位的 Arial Black / Tahoma 照抄保留
+             （这两个是系统自带，不构成依赖）。 */
   --f-title: "微软雅黑", "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
-  --f-body:  "思源黑体 CN", "Source Han Sans CN", "思源黑体", "Noto Sans CJK SC",
-             "微软雅黑", "Microsoft YaHei", sans-serif;
+  --f-body:  "微软雅黑", "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
   --f-pill:  Tahoma, "微软雅黑", "Microsoft YaHei", sans-serif;   /* 目录胶囊 latin=Tahoma */
   --f-heavy: "Arial Black", "Arial Bold", Impact, sans-serif;      /* 章节页 Part 01 */
+  /* ［决策 D2］代码用常见等宽栈（全平台自带，零依赖） */
+  --f-mono:  Consolas, "Cascadia Mono", "SF Mono", Menlo, Consolas, "Liberation Mono",
+             "Courier New", monospace;
+  /* ［决策 D3］公式字体由 KaTeX 自带（assets/katex/fonts 内的 woff2），此处仅作兜底栈 */
+  --f-math:  KaTeX_Main, "Cambria Math", "Latin Modern Math", "Times New Roman", serif;
 
   /* ---------- 字号阶梯（pt 原值；页面实测并集 12/14/16/18/20/24/28/32/40-44/80） ---------- */
   --fs-12: 16px;      /* 12pt  正文小字、章节页说明、要点正文 */
@@ -112,9 +133,30 @@
   /* 目录金环描边：θ=225°（@ang=13500000），stops 0%#FFC000 → 100%#C00000
      框近正方（248.8×241.7），规则给 315.8°；页内用 SVG objectBoundingBox 等效表达 */
   --g-ring: linear-gradient(315.8deg, var(--c-yellow) 0%, var(--c-red-deep) 100%);
-  /* 底部渐变条：gradFill path=circle，fillToRect 50000×4，
-     stops 0%#C00000 → 100%#FFC000（椭圆横半径=半宽 640px，纵半径=半高 3.9px）
-     实测横向 x=640 处 #C00000、两端 #FDBD00，左右严格对称 */
-  --g-bar: radial-gradient(ellipse 50% 50% at 50% 50%,
-      var(--c-red-deep) 0%, var(--c-yellow) 100%);
+  /* 底部渐变条（slideLayout7 矩形 3）：
+     off(0, 6777038) ext(12192000, 74611)，gradFill path="circle" fillToRect 50000×4，
+     stops 0%#C00000 → 100%#FFC000。
+     ⚠ 实测（对渲染 PNG 做纵横剖面 + 密取样）发现三件不能靠"想当然"复刻的事：
+       1) 垂直方向**完全无变化**（y=712/714/716/718 同一 x 同色）→ 它不是按 ry=高/2 的椭圆，
+          而是纯一维水平渐变；故纵半径取极大值把 y 项压没。
+       2) 颜色曲线不符合 gamma 空间插值、也不符合线性光插值，也不符合 sin²/幂律；
+          逐点反解的渐变参数 p 与归一化半径 s 无解析关系。故按实测剖面写密色标。
+       3) 左右严格对称（x=480 与 x=800 同色；x=640 为 #C00000）。
+     下列 15 个色标即 y=713/715/717 三行平均的实测值（左半，右半对称）。 */
+  --g-bar: radial-gradient(ellipse 640px 100000px at 640px 50%,
+      #C00000 0%,
+      #C11C00 5%,
+      #C32900 10%,
+      #C53600 15%,
+      #C74200 20%,
+      #CA4F00 25%,
+      #CE5C00 30%,
+      #D87500 40%,
+      #E28C00 50%,
+      #EC9F00 60%,
+      #F4AE00 70%,
+      #FAB700 80%,
+      #FDBD00 90%,
+      #FEBF00 95%,
+      #FFC000 100%);
 }

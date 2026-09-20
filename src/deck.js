@@ -62,8 +62,31 @@
     go(e.clientX < innerWidth / 2 ? -1 : 1);
   });
 
+  /* ---- 地址栏直接改 #n 也能跳（同文档导航不会重跑脚本） ---- */
+  addEventListener('hashchange', function () {
+    if (/^#\d+$/.test(location.hash)) show(parseInt(location.hash.slice(1), 10) - 1);
+  });
+
   addEventListener('resize', fit);
   fit();
   if (!solo) show(/^#\d+$/.test(location.hash) ? parseInt(location.hash.slice(1), 10) - 1 : cur);
   else if (hud) hud.style.display = 'none';
+
+  /* ---- 公式（决策 D3）：页面若引入了本地 KaTeX 就自动渲染 ----
+     $...$ 行内、$$...$$ 与 \[...\] 独立；auto-render 默认跳过 pre/code，
+     所以代码块里的 $ 不会被误当公式。 */
+  if (typeof window.renderMathInElement === 'function') {
+    window.renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\[', right: '\\]', display: true },
+        { left: '$', right: '$', display: false },
+        { left: '\\(', right: '\\)', display: false }
+      ],
+      throwOnError: false,
+      /* 代码里的 $ 与 \[ 不能被当公式：默认只按标签名跳过 pre/code，
+         这里再按类名兜一层（.code/.pre 即使写在 span 上也不会被误渲染） */
+      ignoredClasses: ['code', 'pre']
+    });
+  }
 })();

@@ -6,6 +6,8 @@
 <link rel="stylesheet" href="../tokens.css">
 <link rel="stylesheet" href="../deck.css">
 <link rel="stylesheet" href="../components.css">
+<!-- 公式（决策 D3）：本地内置 KaTeX，不引 CDN -->
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
 <style>
 /* ==========================================================================
    正文页（slides 4–8 每页复用的 chrome）
@@ -48,6 +50,11 @@
           <span class="box__label">定义 1（结构保持）　</span>设 <em>X</em> 为样本集，若映射 <em>f</em> 在 <em>X</em> 上的像与原空间中的邻接关系一致，则称 <em>f</em> 是结构保持的。
         </div>
         <p>与既有工作相比，本文的贡献在于给出可解析的约束松弛条件，并证明松弛后的解在原始问题上的次优间隙有界。</p>
+        <div class="formula--block">
+          $$\min_{f\in\mathcal{H}}\ \sum_{i=1}^{n}\ell\bigl(f(x_i),y_i\bigr)+\lambda\lVert f\rVert_{\mathcal{H}}^2$$
+          <span class="formula__no">(1)</span>
+        </div>
+        <p>其中正则项系数 $\lambda>0$ 控制假设空间复杂度，其取值对间隙界的影响在第四章讨论。</p>
       </div>
       <div>
         <h3>二、本文安排</h3>
@@ -75,6 +82,8 @@
   </section>
 </div>
 
+<script src="../assets/katex/katex.min.js"></script>
+<script src="../assets/katex/auto-render.min.js"></script>
 <script src="../deck.js"></script>
 </body>
 </html>

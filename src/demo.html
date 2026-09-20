@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="tokens.css">
 <link rel="stylesheet" href="deck.css">
 <link rel="stylesheet" href="components.css">
+<!-- 公式（决策 D3）：本地内置 KaTeX，不引 CDN -->
+<link rel="stylesheet" href="assets/katex/katex.min.css">
 <style>
 /* style-guide 专用原子（只服务这份自指规范，不进 components.css） */
 .swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px 18px; }
@@ -74,8 +76,8 @@
     <div class="toc-num" style="left:585.8px;top:525.4px">4</div>
     <div class="toc-item" style="left:651.7px;top:203px">色彩与用色</div>
     <div class="toc-item" style="left:651.7px;top:307px">字体与字阶</div>
-    <div class="toc-item" style="left:651.7px;top:411.1px">版式与几何</div>
-    <div class="toc-item" style="left:651.7px;top:515.2px">组件清单</div>
+    <div class="toc-item" style="left:651.7px;top:411.1px">公式与代码</div>
+    <div class="toc-item" style="left:651.7px;top:515.2px">版式与组件</div>
     <img class="brandmark" style="left:967.2px;top:33.6px;width:278.7px;height:74.6px" src="assets/logo-xjtu.png" alt="西安交通大学">
   </section>
 
@@ -118,7 +120,7 @@
   <!-- ============ 5 用色规则 + 待拍板 ============ -->
   <section class="slide doc">
     <span class="chev chev--yellow"></span><span class="chev chev--red"></span>
-    <div class="page-head">用色规则与待定项</div>
+    <div class="page-head">用色规则与已定项</div>
     <img class="page-logo" src="assets/logo-xjtu.png" alt="西安交通大学">
     <div class="cols prose" style="position:absolute;left:124.9px;right:124.9px;top:136px;bottom:150px">
       <div>
@@ -126,20 +128,20 @@
         <ul class="points">
           <li class="point"><span class="point__no">1</span>页眉双箭头固定为 <strong>红 #C00000 压黄 #FFC000</strong>，左红右黄；</li>
           <li class="point"><span class="point__no">2</span>底部渐变条 <strong>#C00000 → #FFC000</strong>，一维水平、中心对称；</li>
-          <li class="point"><span class="point__no">3</span>强调只用暖色（红/砖红/橙黄），冷色仅藏青且限于定义类重字；</li>
+          <li class="point"><span class="point__no">3</span>强调只用暖色（红 / 砖红 / 橙黄），冷色仅藏青且限于定义类重字；</li>
           <li class="point"><span class="point__no">4</span>灰阶承担全部次要信息，不参与强调。</li>
         </ul>
       </div>
       <div>
-        <h3>待拍板（收敛决策点）</h3>
-        <div class="box todo">
-          <span class="box__label">主红取哪一个　</span>深红 #C00000 与正红 #C92B2F 都在源模板中出现，用量 10 : 4。前者庄重、后者活泼，需定一个作主红。
+        <h3>已拍板（收敛决策点 · 2026-09-20）</h3>
+        <div class="box box--remark">
+          <span class="box__label">D1 主红　</span><strong>不区分主次</strong>：#C00000 与 #C92B2F 并存，各沿用源模板用法；后续加内容时就近取色，不强行统一。
         </div>
-        <div class="box todo">
-          <span class="box__label">字体怎么带　</span>系统栈（微软雅黑 + 思源黑体，依赖本机安装）还是自带子集 woff2（体积换一致）。
+        <div class="box box--lemma">
+          <span class="box__label">D2 字体　</span><strong>正文与西文固定微软雅黑</strong>；代码走常见等宽栈；公式交给 KaTeX 自带数学字体。
         </div>
-        <div class="box todo">
-          <span class="box__label">KaTeX 带不带　</span>组会/讲义公式多，但要引入一份外部依赖，与"零依赖"底座冲突。
+        <div class="box box--def">
+          <span class="box__label">D3 公式　</span><strong>带 KaTeX，含自动渲染</strong>，且本地内置（<code class="code">assets/katex/</code>，不引 CDN，双击即可用）。
         </div>
       </div>
     </div>
@@ -149,8 +151,8 @@
 
   <!-- ============ 6 章节 Part 02 ============ -->
   <section class="slide section">
-    <div class="band__title">字体与字阶</div>
-    <div class="band__lead">字体实测出现次数与页面字号并集，未做取舍。</div>
+    <div class="band__title">字体与公式</div>
+    <div class="band__lead">字体实测出现次数、页面字号并集，以及本地内置的公式渲染。</div>
     <div class="band"><img class="band__img" src="assets/bg-section.jpg" alt=""></div>
     <div class="band__wash"></div>
     <div class="band__bar"></div>
@@ -183,14 +185,54 @@
           <tr><td>Arial Black</td><td>Part 01 大号数字</td><td>—</td></tr>
           <tr><td>Tahoma</td><td>目录条目拉丁</td><td>—</td></tr>
         </table>
-        <p style="margin-top:12px">学术感来自<strong>黑体 + 大留白 + 红黄点缀</strong>，不是衬线。故模板一律不引衬线体。</p>
+        <div class="box box--lemma gap">
+          <span class="box__label">D2 落地　</span>源骨架是思源黑体，但为避免别人机器未安装时字重跳档，<strong>正文与西文统一固定为微软雅黑</strong>；Arial Black / Tahoma 两个装饰位是系统自带，照抄保留。
+        </div>
+        <p>学术感来自<strong>黑体 + 大留白 + 红黄点缀</strong>，不是衬线。故模板一律不引衬线体。</p>
       </div>
     </div>
     <div class="page-bar"></div>
     <div class="pager"><span class="pager__cur"></span><span class="pager__sep">/</span><span class="pager__total"></span></div>
   </section>
 
-  <!-- ============ 8 版式几何 + 组件清单 ============ -->
+  <!-- ============ 8 公式与代码 ============ -->
+  <section class="slide doc">
+    <span class="chev chev--yellow"></span><span class="chev chev--red"></span>
+    <div class="page-head">公式与代码</div>
+    <img class="page-logo" src="assets/logo-xjtu.png" alt="西安交通大学">
+    <div class="cols" style="position:absolute;left:124.9px;right:124.9px;top:130px;bottom:110px">
+      <div class="prose">
+        <h3>公式（KaTeX 本地内置，自动渲染）</h3>
+        <p>行内写法 <code class="code">$…$</code>：正则项系数 $\lambda>0$ 控制假设空间复杂度。</p>
+        <div class="formula--block">
+          $$\hat{f}=\arg\min_{f\in\mathcal{H}}\ \frac{1}{n}\sum_{i=1}^{n}\ell\bigl(f(x_i),y_i\bigr)+\lambda\lVert f\rVert_{\mathcal{H}}^{2}$$
+          <span class="formula__no">(1)</span>
+        </div>
+        <p>独立写法 <code class="code">$$…$$</code> 或 <code class="code">\[…\]</code>，公式号用 <code class="code">.formula__no</code> 手动给，位置绝对定位在右端。</p>
+        <div class="formula--block">
+          $$\operatorname{gap}(\mathcal{H})\le C\sqrt{\frac{\log(1/\delta)}{2n}}+\lambda\lVert f^{\star}\rVert_{\mathcal{H}}$$
+          <span class="formula__no">(2)</span>
+        </div>
+      </div>
+      <div class="prose">
+        <h3>代码</h3>
+        <pre class="pre"><span class="c"># 载入与自动渲染（本地文件，无需联网）</span>
+<span class="k">import</span> numpy <span class="k">as</span> np
+
+<span class="k">def</span> <span class="s">gap_bound</span>(n, delta, lamb, norm_f):
+    <span class="c">"""式(2) 的数值上界"""</span>
+    <span class="k">return</span> np.sqrt(np.log(<span class="s">1.0</span> / delta) / (<span class="s">2.0</span> * n)) + lamb * norm_f</pre>
+        <p>行内代码用 <code class="code">.code</code>；块级用 <code class="code">.pre</code>，左侧 3.8px 彩条沿用与定理框同一条形状语言。</p>
+        <div class="box box--def gap">
+          <span class="box__label">接入方式　</span>页头引 <code class="code">assets/katex/katex.min.css</code>，页尾在 <code class="code">deck.js</code> 之前引 <code class="code">katex.min.js</code> 与 <code class="code">auto-render.min.js</code>；渲染挂载写在 deck.js 末尾。
+        </div>
+      </div>
+    </div>
+    <div class="page-bar"></div>
+    <div class="pager"><span class="pager__cur"></span><span class="pager__sep">/</span><span class="pager__total"></span></div>
+  </section>
+
+  <!-- ============ 9 版式几何 + 组件清单 ============ -->
   <section class="slide doc">
     <span class="chev chev--yellow"></span><span class="chev chev--red"></span>
     <div class="page-head">版式几何与组件</div>
@@ -230,7 +272,7 @@
     <div class="pager"><span class="pager__cur"></span><span class="pager__sep">/</span><span class="pager__total"></span></div>
   </section>
 
-  <!-- ============ 9 封底 ============ -->
+  <!-- ============ 10 封底 ============ -->
   <section class="slide thanks">
     <img class="thanks-bg" src="assets/bg-cover.jpeg" alt="">
     <div class="cover-veil"></div>
@@ -246,7 +288,9 @@
 
 </div>
 
-<div class="hud">1<span class="hud__sep">/</span>9</div>
+<div class="hud">1<span class="hud__sep">/</span>10</div>
+<script src="assets/katex/katex.min.js"></script>
+<script src="assets/katex/auto-render.min.js"></script>
 <script src="deck.js"></script>
 </body>
 </html>
