@@ -77,26 +77,44 @@
   /* 章节页 Part 01 文字 outerShdw blurRad=38100 dist=38100 dir=45° #000 alpha43.137% */
   --sh-part: 2.83px 2.83px 4px rgba(0, 0, 0, .431);
 
-  /* ---------- 渐变（gradFill 原值，角度已按 CSS=OOXML+90° 换算） ---------- */
-  /* 封面/封底奶黄蒙版：lin 90°，stops 1%#FDEAC4 → 53%#FFFFFF → 100%#FFFFFF alpha0 */
+  /* ---------- 渐变（gradFill 原值） ----------
+     ⚠ OOXML 的 a:lin/@ang **不能**直接按「视觉角度 + 90°」换算成 CSS 角度。
+     这些填充都带 scaled="1"（角度随填充区一起被拉伸），实测（对渲染 PNG 做掩膜最小二乘拟合）
+     其真实视觉方向满足：
+         CSS 角 φ = atan2( h·cosθ , −w·sinθ )      θ = @ang ÷ 60000（度），w/h 为形状宽高
+     在三个独立样本上验证通过：
+         封面校训  θ=45°  (1068.9×74.3)  规则 176.02°  拟合 176.10°
+         章节 Part θ=315° (665.3×72)     规则   6.18°  拟合   6.18°
+         封底 THANKS θ=90° (486.9×138.9) 规则 180.00°  拟合 179.73°
+     轴对齐的渐变（θ=0/90/180/270）用该公式仍得 90/180/270/0°，与直觉一致，
+     所以只有「非轴角」的校训与 Part 条会被这条坑到——直接写 45deg/135deg 会明显错。 */
+
+  /* 封面/封底奶黄蒙版：θ=90°，stops 1%#FDEAC4 → 53%#FFFFFF → 100%#FFFFFF alpha0 */
   --g-veil-cover: linear-gradient(180deg,
       var(--c-cream) 1%, var(--c-white) 53%, rgba(255, 255, 255, 0) 100%);
-  /* 目录左栏蒙版：lin 90°，stops 0%#FDEAC4 → 15%#FFFFFF → 100%#FFFFFF alpha0 */
+  /* 目录左栏蒙版：θ=90°，stops 0%#FDEAC4 → 15%#FFFFFF → 100%#FFFFFF alpha0 */
   --g-veil-toc: linear-gradient(180deg,
       var(--c-cream) 0%, var(--c-white) 15%, rgba(255, 255, 255, 0) 100%);
-  /* 章节页图片蒙版：lin 90°，stops 1%#E49E3F → 40%#FFFFFF alpha54% → 100%alpha0 */
-  --g-veil-band: linear-gradient(180deg,
-      var(--c-amber) 1%, rgba(255, 255, 255, .54) 40%, rgba(255, 255, 255, 0) 100%);
-  /* 封面校训字：lin 45°（OOXML 2700000），stops 1%#C00000 → 100%#FFC000 */
-  --g-motto: linear-gradient(135deg, var(--c-red-deep) 1%, var(--c-yellow) 100%);
-  /* 章节页 Part 条：lin 315°（OOXML 18900000），stops 1%#C00000 → 100%#E49E3F */
-  --g-part: linear-gradient(45deg, var(--c-red-deep) 1%, var(--c-amber) 100%);
-  /* 封底 THANKS 字：lin 90°，stops 1%#C86142 → 100%#E49E3F */
+  /* 章节页图片蒙版：θ=90°，stops 1%#E49E3F → 40%#FFFFFF alpha54% → 100%alpha0
+     ⚠ 这段是「异色 + 异 alpha」段，CSS 渐变默认按**预乘 alpha**插值、PowerPoint 按直乘，
+     两者会差出 Δ≈35/765（实测 y=200 处 PPT #F2D0A0 vs 预乘 #F0C58D）。
+     拆成「不透明颜色层 + alpha 遮罩层」两段后与 PPT 数学等价（见 tokens 注释与 components 用法）。 */
+  --g-veil-band-color: linear-gradient(180deg,
+      var(--c-amber) 1%, var(--c-white) 40%, var(--c-white) 100%);
+  --g-veil-band-alpha: linear-gradient(180deg,
+      rgba(0, 0, 0, 1) 1%, rgba(0, 0, 0, .54) 40%, rgba(0, 0, 0, 0) 100%);
+  /* 封面校训字：θ=45°（@ang=2700000），stops 1%#C00000 → 100%#FFC000 */
+  --g-motto: linear-gradient(176.02deg, var(--c-red-deep) 1%, var(--c-yellow) 100%);
+  /* 章节页 Part 条：θ=315°（@ang=18900000），stops 1%#C00000 → 100%#E49E3F */
+  --g-part: linear-gradient(6.18deg, var(--c-red-deep) 1%, var(--c-amber) 100%);
+  /* 封底 THANKS 字：θ=90°，stops 1%#C86142 → 100%#E49E3F */
   --g-thanks: linear-gradient(180deg, var(--c-brick) 1%, var(--c-amber) 100%);
-  /* 目录金环描边：lin 225°（OOXML 13500000），stops 0%#FFC000 → 100%#C00000 */
-  --g-ring: linear-gradient(315deg, var(--c-yellow) 0%, var(--c-red-deep) 100%);
+  /* 目录金环描边：θ=225°（@ang=13500000），stops 0%#FFC000 → 100%#C00000
+     框近正方（248.8×241.7），规则给 315.8°；页内用 SVG objectBoundingBox 等效表达 */
+  --g-ring: linear-gradient(315.8deg, var(--c-yellow) 0%, var(--c-red-deep) 100%);
   /* 底部渐变条：gradFill path=circle，fillToRect 50000×4，
-     stops 0%#C00000 → 100%#FFC000（椭圆的横半径=半宽 640px，纵半径=半高 3.9px） */
+     stops 0%#C00000 → 100%#FFC000（椭圆横半径=半宽 640px，纵半径=半高 3.9px）
+     实测横向 x=640 处 #C00000、两端 #FDBD00，左右严格对称 */
   --g-bar: radial-gradient(ellipse 50% 50% at 50% 50%,
       var(--c-red-deep) 0%, var(--c-yellow) 100%);
 }
