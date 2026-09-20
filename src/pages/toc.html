@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>目录 — 学术风演示模板</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../deck.css">
+<style>
+/* ==========================================================================
+   目录页（临摹第 2 页）
+   图层：slideLayout3（左栏底图+蒙版+徽标、右上校徽）在下，slide2（四条胶囊、
+   四个序号圆、右上校徽）在上。两边都画了校徽，这里都照抄。
+   占位文字「单击输入文字」按 BRIEF「抄皮不抄占位内容」换成中性组会向章节名。
+   ========================================================================== */
+.toc { background: var(--c-white); }
+
+/* 图片 2 | rId2 = image1.png | 组合1 内 off(-137160,-13335) ext(3657600,6858000)
+   blipFill srcRect l="35450" r="28977" → 左右各裁掉 35.45% / 28.977%，只留中间 35.573%
+   再拉伸填满 384.2×720。用「容器 overflow:hidden + 整图放大偏移」等价复刻：
+     容器 = 图片框本体 (-14.4,-1.4) 384.2×720（PPT 里超出图片框的部分是被裁掉的，必须复刻）
+     整图宽 = 384.2 / 0.35573 = 1080.0px（该比例下 1080:720 = 1.5 = 原图 3713:2475，零变形）
+     整图左 = -0.35450 × 1080 = -382.86px（相对容器）
+   注意：不能换 object-fit（cover 只能居中裁，复刻不出指定的裁切框） */
+.toc__strip {
+  position: absolute;
+  left: -14.4px; top: -1.4px; width: 384.2px; height: 720px;
+  overflow: hidden;
+}
+.toc__strip > img {
+  position: absolute;
+  left: -382.86px; top: 0; width: 1080px; height: 720px;
+}
+
+/* 矩形 3 | 同矩形，gradFill lin 90°：0=#FDEAC4 → 15000=bg1 → 100000=bg1 alpha0 */
+.toc__veil {
+  position: absolute;
+  left: -14.4px; top: -1.4px; width: 384.2px; height: 720px;
+  background: var(--g-veil-toc);
+}
+
+/* 椭圆 5 | off(2228850,2181225) ext(2727325,2659388) | 白底，文字 sz=4800 b=1
+   latin=Tahoma ea=微软雅黑 color=#C00000 algn=ctr anchor=ctr */
+.toc__badge {
+  position: absolute;
+  left: 234px; top: 228.9px; width: 286.1px; height: 279px;
+  border-radius: 50%;
+  background: var(--c-white);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--f-pill);
+  font-size: var(--fs-48);
+  font-weight: 700;
+  color: var(--c-red-deep);
+}
+
+/* 椭圆 6 | off(2408074,2358678) ext(2370071,2302347) | noFill + ln w=57150(6px) algn=ctr
+   gradFill lin 225°：0=#FFC000 → 100000=#C00000（实测量得：左上 C53600、右下 FCBA00）
+   algn="ctr" = 描边骑在几何边界上、向外溢出半个线宽 → 路径半径就是边长/2（不是 (边长−6)/2），
+   故外缘到 252.7+248.8+3 = 504.5，与 PPT 实测右缘 504 吻合。
+   viewBox 与元素框 1:1（缩放比必须是 1，否则 preserveAspectRatio 会把环整体缩小），
+   外溢的半个线宽靠 overflow:visible 放出去；非正方 bbox 走对角线 = OOXML scaled="1" */
+.toc__ring {
+  position: absolute;
+  left: 252.7px; top: 247.6px; width: 248.8px; height: 241.7px;
+  overflow: visible;
+}
+
+/* KSO_Shape | roundRect adj=50000（全圆角胶囊）| off(6207095, 1933284+间距) ext(4530755,584775)
+   fill=#FFFFFF ln=noFill + effectLst outerShdw blurRad=50800 dist=38100 dir=90° #002060 alpha40%
+   sz=2800 b=1 latin=Tahoma ea=微软雅黑 color=tx1 lumMod95/lumOff5 (≈#0D0D0D) algn=ctr */
+.toc__item {
+  position: absolute;
+  left: 651.7px; width: 475.7px; height: 61.4px;
+  border-radius: 30.7px;               /* = 0.5 × 高 */
+  background: var(--c-white);
+  box-shadow: var(--sh-pill);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--f-pill);
+  font-size: var(--fs-28);
+  font-weight: 700;
+  color: var(--c-ink-soft);
+}
+.toc__item--1 { top: 203px; }
+.toc__item--2 { top: 307px; }
+.toc__item--3 { top: 411.1px; }
+.toc__item--4 { top: 515.2px; }
+
+/* 椭圆 18/20/22/24 | Ø50 | off(5579246, 208.7/312.8/421.3/525.4 共 y 值见下)
+   fill=#C00000，数字 sz=2400 b=1 白 */
+.toc__num {
+  position: absolute;
+  left: 585.8px; width: 50px; height: 50px;
+  border-radius: 50%;
+  background: var(--c-red-deep);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--f-title);
+  font-size: var(--fs-24);
+  font-weight: 700;
+  color: var(--c-white);
+}
+.toc__num--1 { top: 208.7px; }
+.toc__num--2 { top: 312.8px; }
+.toc__num--3 { top: 421.3px; }
+.toc__num--4 { top: 525.4px; }
+
+/* 右上校徽：版式里那份（slideLayout3 Picture 2 | off(9766666,236000) ext(1645045,440000)）
+   被本页那份完全压住，故只复刻本页这种大号（slide2 Picture 2 | rId2 = image2.png） */
+.toc__logo {
+  position: absolute;
+  left: 967.2px; top: 33.6px; width: 278.7px; height: 74.6px;
+}
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <section class="slide is-solo toc">
+
+    <!-- ---- slideLayout3：左栏底图 + 蒙版 + 「目录」徽标 ---- -->
+    <div class="toc__strip"><img src="../assets/bg-toc.png" alt=""></div>
+    <div class="toc__veil"></div>
+
+    <div class="toc__badge">目录</div>
+    <svg class="toc__ring" viewBox="0 0 248.8 241.7" aria-hidden="true">
+      <defs>
+        <!-- 0% 在右下(SE)、100% 在左上(NW)：对应 OOXML lin ang=225° -->
+        <linearGradient id="ringGrad" x1="100%" y1="100%" x2="0%" y2="0%">
+          <stop offset="0%" stop-color="#FFC000"/>
+          <stop offset="100%" stop-color="#C00000"/>
+        </linearGradient>
+      </defs>
+      <ellipse cx="124.4" cy="120.85" rx="124.4" ry="120.85"
+               fill="none" stroke="url(#ringGrad)" stroke-width="6"/>
+    </svg>
+
+    <!-- ---- slide2：四条胶囊 + 四个序号 ---- -->
+    <div class="toc__num toc__num--1">1</div>
+    <div class="toc__num toc__num--2">2</div>
+    <div class="toc__num toc__num--3">3</div>
+    <div class="toc__num toc__num--4">4</div>
+
+    <div class="toc__item toc__item--1">研究背景与意义</div>
+    <div class="toc__item toc__item--2">国内外研究现状</div>
+    <div class="toc__item toc__item--3">方法与技术路线</div>
+    <div class="toc__item toc__item--4">实验设计与结论</div>
+
+    <img class="toc__logo" src="../assets/logo-xjtu.png" alt="西安交通大学">
+
+  </section>
+</div>
+
+<script src="../deck.js"></script>
+</body>
+</html>
