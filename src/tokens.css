@@ -1,0 +1,102 @@
+/* ==========================================================================
+   tokens.css — 设计令牌
+   本文件的值全部是「照抄」来的：来源是 source/2025redyellownew.pptx 解包后的
+   ppt/slides/*.xml、ppt/slideLayouts/*.xml、ppt/slideMasters/*.xml 页面硬编码值，
+   不是统计推断、也不是设计取舍。每个令牌后面标了正本出处。
+   换算：1pt = 4/3 px；1px = 9525 EMU。逻辑画布 1280×720（= 960×540pt @96dpi）。
+   ========================================================================== */
+
+:root {
+  /* ---------- 画布 ---------- */
+  --canvas-w: 1280px;   /* PageSetup.SlideWidth  960pt */
+  --canvas-h: 720px;    /* PageSetup.SlideHeight 540pt */
+  --pt: 1.3333px;       /* 1pt，用于把字号原值写成 pt×系数 */
+
+  /* ---------- 色板（页面 srgbClr 实测，按角色） ---------- */
+  --c-red-deep:   #C00000;  /* 深红：主红候选 A。页眉 chevron、目录序号、金环收尾、
+                               底部渐变条中心、Part 条起点、封面细线、正文页题 */
+  --c-red-true:   #C92B2F;  /* 正红：主红候选 B。封面副标题「…汇报答辩PPT模版」 */
+  --c-brick:      #C86142;  /* 砖红：三红之一。THANKS 渐起点、图标底、要点条 */
+  --c-amber:      #E49E3F;  /* 橙黄：二号主色。Part 条终点、章节页蒙版、封底空心弧 */
+  --c-yellow:     #FFC000;  /* 标黄：页眉第二枚 chevron、金环起点、渐变条边缘 */
+  --c-cream:      #FDEAC4;  /* 奶黄：封面/封底顶部奶油底、目录左栏顶部 */
+  --c-navy:       #002060;  /* 藏青：目录胶囊投影色（alpha 40%）、重字强调 */
+  --c-ink:        #000000;  /* 正文黑（theme tx1 = dk1 windowText） */
+  --c-ink-soft:   #0D0D0D;  /* 目录胶囊文字（tx1 lumMod95/lumOff5） */
+  --c-gray-900:   #404040;  /* 「谢谢各位专家」 */
+  --c-gray-600:   #808080;  /* 章节页小字说明（bg1 lumMod50 = 白×50% 亮度） */
+  --c-gray-500:   #95A5A6;  /* 次要信息 */
+  --c-gray-100:   #F6F6F6;  /* 浅暖灰底块 */
+  --c-blue-gray:  #3B5463;  /* 蓝灰 */
+  --c-white:      #FFFFFF;  /* theme bg1 = lt1 window */
+  --c-hairline:   #595959;  /* 封底空心弧描边 */
+
+  /* ---------- 字体（typeface 实测；收敛决策点见 BRIEF 第 6 条） ---------- */
+  --f-title: "微软雅黑", "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+  --f-body:  "思源黑体 CN", "Source Han Sans CN", "思源黑体", "Noto Sans CJK SC",
+             "微软雅黑", "Microsoft YaHei", sans-serif;
+  --f-pill:  Tahoma, "微软雅黑", "Microsoft YaHei", sans-serif;   /* 目录胶囊 latin=Tahoma */
+  --f-heavy: "Arial Black", "Arial Bold", Impact, sans-serif;      /* 章节页 Part 01 */
+
+  /* ---------- 字号阶梯（pt 原值；页面实测并集 12/14/16/18/20/24/28/32/40-44/80） ---------- */
+  --fs-12: 16px;      /* 12pt  正文小字、章节页说明、要点正文 */
+  --fs-14: 18.67px;   /* 14pt  卡片正文 */
+  --fs-16: 21.33px;   /* 16pt  小节标题、序号块 */
+  --fs-18: 24px;      /* 18pt  封面副标题/汇报人 */
+  --fs-20: 26.67px;   /* 20pt  条内文字 */
+  --fs-24: 32px;      /* 24pt  目录序号、谢谢各位专家 */
+  --fs-28: 37.33px;   /* 28pt  目录条目 */
+  --fs-32: 42.67px;   /* 32pt  正文页页题 */
+  --fs-36: 48px;      /* 36pt  章节页 Part 01 */
+  --fs-44: 58.67px;   /* 44pt  章节页大标题 */
+  --fs-48: 64px;      /* 48pt  目录徽标「目录」 */
+  --fs-40: 53.33px;   /* 40pt  封面校训 */
+  --fs-80: 106.67px;  /* 80pt  封底 THANKS */
+
+  /* ---------- 正文页 chrome 几何（slideLayout7 + slide4-8 实测） ---------- */
+  --chrome-title-x: 124.9px;   /* 页题框 */
+  --chrome-title-y: 44.2px;
+  --chrome-title-w: 277.9px;
+  --chrome-title-h: 61.4px;
+  --chrome-chevron-y: 58px;    /* 双箭头 */
+  --chrome-chevron-h: 32.5px;
+  --chrome-chevron-red-x: 54.5px;
+  --chrome-chevron-red-w: 35.5px;
+  --chrome-chevron-yellow-x: 84px;
+  --chrome-chevron-yellow-w: 35px;
+  --chrome-logo-x: 1025.4px;   /* 右上校徽 */
+  --chrome-logo-y: 41.2px;
+  --chrome-logo-w: 221.8px;
+  --chrome-logo-h: 59.4px;
+  --chrome-bar-y: 711.5px;     /* 底部渐变条 */
+  --chrome-bar-h: 7.8px;
+
+  /* ---------- 阴影（effectLst 实测） ---------- */
+  /* 目录胶囊 outerShdw blurRad=50800 dist=38100 dir=90° #002060 alpha40% */
+  --sh-pill: 0 4px 5.3px rgba(0, 32, 96, .4);
+  /* 章节页 Part 01 文字 outerShdw blurRad=38100 dist=38100 dir=45° #000 alpha43.137% */
+  --sh-part: 2.83px 2.83px 4px rgba(0, 0, 0, .431);
+
+  /* ---------- 渐变（gradFill 原值，角度已按 CSS=OOXML+90° 换算） ---------- */
+  /* 封面/封底奶黄蒙版：lin 90°，stops 1%#FDEAC4 → 53%#FFFFFF → 100%#FFFFFF alpha0 */
+  --g-veil-cover: linear-gradient(180deg,
+      var(--c-cream) 1%, var(--c-white) 53%, rgba(255, 255, 255, 0) 100%);
+  /* 目录左栏蒙版：lin 90°，stops 0%#FDEAC4 → 15%#FFFFFF → 100%#FFFFFF alpha0 */
+  --g-veil-toc: linear-gradient(180deg,
+      var(--c-cream) 0%, var(--c-white) 15%, rgba(255, 255, 255, 0) 100%);
+  /* 章节页图片蒙版：lin 90°，stops 1%#E49E3F → 40%#FFFFFF alpha54% → 100%alpha0 */
+  --g-veil-band: linear-gradient(180deg,
+      var(--c-amber) 1%, rgba(255, 255, 255, .54) 40%, rgba(255, 255, 255, 0) 100%);
+  /* 封面校训字：lin 45°（OOXML 2700000），stops 1%#C00000 → 100%#FFC000 */
+  --g-motto: linear-gradient(135deg, var(--c-red-deep) 1%, var(--c-yellow) 100%);
+  /* 章节页 Part 条：lin 315°（OOXML 18900000），stops 1%#C00000 → 100%#E49E3F */
+  --g-part: linear-gradient(45deg, var(--c-red-deep) 1%, var(--c-amber) 100%);
+  /* 封底 THANKS 字：lin 90°，stops 1%#C86142 → 100%#E49E3F */
+  --g-thanks: linear-gradient(180deg, var(--c-brick) 1%, var(--c-amber) 100%);
+  /* 目录金环描边：lin 225°（OOXML 13500000），stops 0%#FFC000 → 100%#C00000 */
+  --g-ring: linear-gradient(315deg, var(--c-yellow) 0%, var(--c-red-deep) 100%);
+  /* 底部渐变条：gradFill path=circle，fillToRect 50000×4，
+     stops 0%#C00000 → 100%#FFC000（椭圆的横半径=半宽 640px，纵半径=半高 3.9px） */
+  --g-bar: radial-gradient(ellipse 50% 50% at 50% 50%,
+      var(--c-red-deep) 0%, var(--c-yellow) 100%);
+}
