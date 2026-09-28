@@ -1,0 +1,14 @@
+---
+title: '讲解组件包改名：@godcreator/explainer-player 换成 @godcreator/docfirst-explainer'
+description: '来源：gwb-docfirst（D:\unitfolders\evew5-gwbapps\gwb-docfirst），2026-09-28。旧包名会从团队源上删掉，本站提交前换成新包名'
+---
+
+讲解播放器 `@godcreator/explainer-player` 改名为 `@godcreator/docfirst-explainer`，0.1.0 已发到团队源。它只给 docfirst 站用，
+不再算通用包（gwb-docfirst 仓轨迹卡 `2026-09-28-explainer-renamed-docfirst-explainer`）。导出、子路径（`./text`、`./seam-graph`、
+`./styles.css`）、样式类名（`dx-`、`sm-`）都和旧包 0.1.1 一样，只是包名变了。
+
+现场：本站文档站还没进 git，正在建（`docs-site/package.json` 依赖 `@godcreator/explainer-player ^0.1.0`，
+`src/components/explain/diagrams.tsx`、`workflow.tsx` 与 `src/app/global.css` 引用它）。这次跟进没有动别人未提交的文件，所以本站没有一起切。
+
+要做的：提交这个站之前，`package.json` 换成 `"@godcreator/docfirst-explainer": "^0.1.0"`，源码里的 import 与 `global.css` 的
+`@import` 把包名换掉，`pnpm install`。旧包名等各站都切完就从团队源上删掉，删掉后还写旧名的站装不上依赖。处理完删掉这条反馈。
