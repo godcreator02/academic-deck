@@ -29,19 +29,19 @@ export const components = {
   {id:'3',from:'presentation',to:'browser',label:'页面生命周期',text:'③ 放映与公共动画组件共同响应活动页、页面隐藏和打印，打印使用静态帧。'},
  ],
 };
-/* ref file="../plugins/academic-deck/build.ts" lines="7-23" hash="858cfc7cce50" blob="f2c112487744" */
+/* ref file="../plugins/academic-deck/build.ts" lines="7-19" hash="c0d373568b5b" blob="b8d1e25f8b4d" */
 export const plugin = {
  title:'一次命令从入口到产物',
  nodes:[
   {id:'gwb',title:'gwbCommands / gwbSkills',detail:'工作台服务',external:true},
   {id:'entry',title:'src/index.ts + arguments.mjs',detail:'登记与参数校验',capabilities:['apply(ctx) · parseArguments','四条命令与制作 skill']},
   {id:'jobs',title:'src/jobs.mjs',detail:'目录任务生命周期',capabilities:['createJobs · run · dispose','同目录互斥 · 卸载取消']},
-  {id:'execute',title:'执行器 + build.ts',detail:'文件、进程与打包',capabilities:['create · build-project · inspect','模板 · 驱动 · 版本 · 参考文档']},
+  {id:'execute',title:'执行器 + build.ts',detail:'文件、进程与打包',capabilities:['create · build-project · inspect','模板 · 驱动 · 版本']},
  ],
  edges:[
   {id:'1',from:'gwb',to:'entry',label:'登记 / 调用',text:'① 插件向工作台登记四条命令和 academic-deck skill。'},
   {id:'2',from:'entry',to:'jobs',label:'已校验参数',text:'② 校验绝对路径、可选参数与允许字段后，进入对应目录的任务。'},
   {id:'3',from:'jobs',to:'execute',label:'AbortSignal',text:'③ 任务传递取消信号；执行器负责子进程、临时服务和浏览器的清理。'},
-  {id:'4',from:'execute',to:'entry',label:'构建文件',disk:true,text:'④ build.ts 打包插件自己的完整 skill、参考文档和浏览器驱动，并写入配套组件版本。'},
+  {id:'4',from:'execute',to:'entry',label:'构建文件',disk:true,text:'④ build.ts 打包命令实现与浏览器驱动，并写入配套组件版本。'},
  ],
 };

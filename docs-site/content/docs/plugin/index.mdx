@@ -22,11 +22,11 @@ full: true
 
 create 使用 templates/basic；build 调项目安装的 Vite；check 与 export 使用随插件发布的 Playwright 驱动和机器上已安装的 Chrome 或 Edge。项目不必安装浏览器驱动。
 
-## ④ 打包插件说明与配套版本
+## ④ 构建打包与配套版本
 
-插件在构建时读取组件包的版本，将自己的完整 skill、参考文档与版本附件打包发布。两包按同一批次配套发布；组件包只提供汇报运行代码、样式和素材。
+插件在构建时读取组件包的版本，打包命令实现与浏览器驱动；skill 与参考文档由文档站 render 到 skills/ 随包发布。两包按同一批次配套发布；组件包只提供汇报运行代码、样式和素材。
 
-{/* ref file="../plugins/academic-deck/build.ts" lines="7-23" hash="858cfc7cce50" blob="f2c112487744" */}
+{/* ref file="../plugins/academic-deck/build.ts" lines="7-19" hash="c0d373568b5b" blob="b8d1e25f8b4d" */}
 
 依赖声明见下面的包清单；完整参数见 [命令契约](/docs/plugin/commands)。
 

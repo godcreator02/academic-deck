@@ -18,7 +18,7 @@ export default {
   ],
   "content/docs/plugin/skill.mdx": [
     {
-      "to": "../plugins/academic-deck/skill-source/academic-deck/SKILL.md",
+      "to": "../plugins/academic-deck/skills/academic-deck/SKILL.md",
       "frontmatter": [
         "name",
         "description"
@@ -26,10 +26,10 @@ export default {
     }
   ],
   "content/docs/plugin/references/authoring.mdx": [
-    "../plugins/academic-deck/skill-source/academic-deck/references/authoring.md"
+    "../plugins/academic-deck/skills/academic-deck/references/authoring.md"
   ],
   "content/docs/plugin/references/animation.mdx": [
-    "../plugins/academic-deck/skill-source/academic-deck/references/animation.md"
+    "../plugins/academic-deck/skills/academic-deck/references/animation.md"
   ],
   "content/docs/outputs/agents.mdx": [
     "../AGENTS.md"

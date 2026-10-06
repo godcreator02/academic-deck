@@ -3,7 +3,6 @@
 **/dist/
 **/.artifacts/
 **/.vite/
-plugins/academic-deck/skills/
 
 # 系统杂物
 Thumbs.db
