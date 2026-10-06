@@ -23,9 +23,9 @@
     "check": "pnpm typecheck"
   },
   "peerDependencies": {
-    "@godcreator/gwb-kernel-desktop": "^0.7.2",
-    "@godcreator/gwb-skills": "^0.4.8",
-    "@godcreator/gwb-commands": "^0.5.3"
+    "@godcreator/gwb-kernel-desktop": "^0.10.0",
+    "@godcreator/gwb-skills": "^0.4.13",
+    "@godcreator/gwb-commands": "^0.6.0"
   },
   "devDependencies": {
     "@godcreator/academic-deck": "workspace:*",
