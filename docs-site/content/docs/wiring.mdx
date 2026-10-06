@@ -1,0 +1,25 @@
+---
+title: 装配与依赖
+description: 发布包、汇报项目和文档站分别依赖什么。
+---
+
+组件包由汇报项目 import；gwb 插件向工作台登记命令与说明书。文档站只在本仓运行，与两者的运行依赖分开。
+
+## 包装配
+
+| 消费方 | 依赖 | 用途 |
+| --- | --- | --- |
+| 汇报项目 | academic-deck、React、React DOM | 页面与放映 |
+| gwb 插件 | 内核契约、gwb-commands、gwb-skills | 命令和说明书登记 |
+| 插件构建 | 组件包、playwright-core | 配套组件版本、浏览器驱动资源 |
+| 文档站 | docfirst、fumadocs、docfirst-explainer | 文档生成、钉码、交互讲解 |
+
+插件的运行依赖与构建依赖由 plugins/academic-deck/package.json 区分。独立汇报可继续用自身的 Vite 构建和 HTTP 放映；操作入口由 gwb 提供。
+
+## skill 的生成路径
+
+docs-site/content/docs/plugin 的 mdx 正本，经 docfirst render 写到插件 skill-source；插件 build 将自己的完整 skill 与参考文档复制到发布目录 skills，并写入配套组件版本附件。组件包不携带 skill。修改时从正本开始，避免构建覆盖手改结果。
+
+两包按同一批次配套发布，按依赖顺序先发布组件包，再发布记录了该组件版本的插件。已有汇报保留锁定版本，由项目显式升级。
+
+{/* ref file="./docfirst.config.mjs" hash="a9aad459f133" blob="d2edd2aa4eca" */}

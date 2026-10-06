@@ -1,0 +1,94 @@
+const assert = require('node:assert/strict');
+const path = require('node:path');
+
+module.exports = async function verifyAnimation(page, artifacts) {
+  const animation = page.locator('.dab-animation');
+  const phase = async () => Number(await animation.getAttribute('data-phase'));
+  const navigate = async n => {
+    await page.evaluate(value => { document.activeElement?.blur(); location.hash = String(value); }, n);
+    await page.waitForFunction(value => !document.querySelectorAll('.slide-slot')[value - 1].hidden, n);
+  };
+  const expectMoving = async () => {
+    const start = await phase();
+    await page.waitForFunction(value => Number(document.querySelector('.dab-animation').dataset.phase) !== value, start);
+  };
+  const expectStopped = async () => {
+    const start = await phase();
+    await page.waitForTimeout(250);
+    assert.equal(await phase(), start);
+  };
+  await navigate(7);
+  await expectMoving();
+  const range = page.getByRole('slider', { name: '波形动画进度' });
+  const autoplay = page.getByRole('checkbox', { name: '波形动画自动播放' });
+  assert.equal(await autoplay.isChecked(), true);
+  const track = await range.boundingBox();
+  await page.mouse.move(track.x + track.width*.2, track.y + track.height/2);
+  await page.mouse.down();
+  await page.mouse.move(track.x + track.width*.7, track.y + track.height/2, { steps: 8 });
+  await page.mouse.up();
+  assert.ok(Math.abs(await phase()-.7)<.05, 'Pointer drag must update the waveform position');
+  await expectStopped();
+  assert.equal(await page.locator('.slide-slot:not([hidden]) .page-no').textContent(), '7/15');
+  await range.press('Home');
+  assert.equal(await phase(), 0);
+  await range.press('ArrowRight');
+  assert.ok(Math.abs(await phase()-.001)<.000001);
+  await range.press('End');
+  assert.equal(await phase(), 1);
+  await expectStopped();
+  await page.getByRole('button', { name: '波形动画定位到5.833 μs', exact: true }).click();
+  assert.ok(Math.abs(await phase()-7/12)<.000001);
+  assert.equal(await animation.locator('.dab-motion-layer [data-tex]').getAttribute('data-tex'), 'v_L=0\\,\\mathrm{V}');
+  const chosenPosition = await phase();
+  await navigate(8); await navigate(7);
+  assert.equal(await phase(), chosenPosition);
+  await expectStopped();
+  await page.getByRole('button', { name: '播放波形动画' }).click();
+  await expectMoving();
+  await page.getByRole('button', { name: '暂停波形动画' }).click();
+  await expectStopped();
+  assert.equal(await page.locator('.slide-slot:not([hidden]) .page-no').textContent(), '7/15');
+  await page.getByRole('button', { name: '播放波形动画' }).click();
+  await expectMoving();
+  await autoplay.uncheck();
+  await expectStopped();
+  await navigate(8); await navigate(7);
+  await expectStopped();
+  await autoplay.check();
+  await expectMoving();
+  await navigate(8);
+  assert.equal(await animation.getAttribute('data-running'), 'false');
+  await expectStopped();
+  await navigate(7);
+  await expectMoving();
+  await page.getByRole('button', { name: '重播波形动画' }).click();
+  assert.ok(await phase() < .08);
+  // A landmark deterministically selects the plateau without waiting for real time.
+  await page.getByRole('button', { name: '波形动画定位到0.833 μs', exact: true }).click();
+  assert.equal(await animation.locator('.dab-motion-layer [data-tex]').getAttribute('data-tex'), 'v_L=0\\,\\mathrm{V}');
+  await page.locator('.slide-slot:not([hidden]) .slide').screenshot({ path: path.join(artifacts, 'waveform-paused.png') });
+  await page.getByRole('button', { name: '播放波形动画' }).click();
+  await page.emulateMedia({ media: 'print' });
+  await page.waitForFunction(() => document.querySelector('.dab-animation').dataset.running === 'false');
+  assert.equal(await phase(), .25, 'Print frame must be deterministic');
+  await expectStopped();
+  for (const selector of ['.dab-motion-layer', '.animation-controls']) {
+    assert.equal(await page.locator(selector).evaluate(e => getComputedStyle(e).display), 'none');
+  }
+  assert.equal(await animation.locator('.trace').count(), 3);
+  await page.emulateMedia({ media: 'screen', reducedMotion: 'reduce' });
+  await expectStopped();
+  assert.equal(await autoplay.isChecked(), false);
+  await range.press('End');
+  assert.equal(await phase(), 1, 'Reduced motion must allow scrubbing');
+  await expectStopped();
+  assert.equal(await page.getByRole('button', { name: '重播波形动画' }).isDisabled(), false, 'Reduced motion must still allow explicitly requested playback');
+  await page.getByRole('button', { name: '重播波形动画' }).click();
+  await expectMoving();
+  assert.notEqual(await page.locator('.dab-motion-layer').evaluate(e => getComputedStyle(e).display), 'none');
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await expectMoving();
+  await navigate(1);
+  console.log('PASS: timeline drag/keyboard/landmarks, pause/resume, autoplay toggle, slide lifecycle, deterministic print and reduced motion.');
+};

@@ -1,0 +1,32 @@
+---
+title: 样例与开发
+description: 在工作区维护组件、命令与文档，复用已有汇报。
+---
+
+## 样例选择
+
+| 目录 | 用途 |
+| --- | --- |
+| examples/example-dab | DAB 波形、电路和时间轴 |
+| examples/project-sst | SST 项目汇报 |
+| examples/report-mcc-gwb | MCC 与 gwb 汇报 |
+| template/react | 设计规范与组件检查稿 |
+| template/source | 原始视觉参考 |
+
+复用时只把内容、数据和项目专属素材带进新项目；公共组件继续从包引用。三份汇报都在 examples，具体构建、检查脚本在各自 package.json。
+
+## 仓根开发
+
+先 pnpm install --frozen-lockfile，再 pnpm build、pnpm check。根脚本决定包、设计稿和示例的验证范围。
+
+{/* ref file="../package.json" hash="a1c7e7e18ada" blob="2d196c90d4d3" */}
+
+## 文档工作流
+
+docs-site 是独立 pnpm 项目，先在站目录安装依赖。改文档正本后执行 doc:render、doc、verify:roster，最后一次性 build。看页面运行 start，12 小时自动停；不运行 next dev。
+
+README、AGENTS、CLAUDE 与插件完整 skill 的对应关系见 docs-site/docfirst.config.mjs。插件 build.ts 将生成的制作流程、组件用法与动画规范打包进发布目录。
+
+## 插件联调
+
+使用 gwb-devkit 命名隔离 home 安装开发包；通过 deck.create 的 packageSpec 指定本地组件 tgz，再安装依赖、构建、检查、导出。正式发版按 gwb-release 和 gwb-devkit 执行，两包按同一批次配套发布，按依赖顺序先组件包后插件；插件记录该批组件版本。

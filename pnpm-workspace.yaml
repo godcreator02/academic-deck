@@ -1,0 +1,9 @@
+packages:
+  - packages/*
+  - plugins/*
+  - examples/*
+  - template/react
+
+allowBuilds:
+  esbuild: true
+  sharp: true

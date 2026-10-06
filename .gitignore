@@ -1,5 +1,9 @@
-# 解包与渲染底稿：随时可删，不进仓
-work/
+# Dependencies and generated output
+**/node_modules/
+**/dist/
+**/.artifacts/
+**/.vite/
+plugins/academic-deck/skills/
 
 # 系统杂物
 Thumbs.db

@@ -1,0 +1,14 @@
+{
+  "name": "academic-deck-workspace",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "pnpm --filter @godcreator/academic-deck build && pnpm --filter @godcreator/gwb-academic-deck build && pnpm --filter academic-deck-react --filter ./examples/* build",
+    "check": "node --test tests/*.test.mjs && pnpm --filter @godcreator/gwb-academic-deck check && pnpm --filter academic-deck-react typecheck && pnpm --filter academic-deck-react --filter ./examples/* verify"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.12",
+    "playwright": "^1.58.2",
+    "sharp": "^0.34.5"
+  }
+}

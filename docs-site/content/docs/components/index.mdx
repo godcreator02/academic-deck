@@ -1,0 +1,31 @@
+---
+title: 组件包
+description: "@godcreator/academic-deck：浏览器中的页面、样式、素材。"
+full: true
+---
+
+<ComponentsMap />
+
+## ① pages 交给 Presentation
+
+项目传入有唯一 label 的页面数组，每页 body 是 React 组件；正式放映使用 Presentation，设计检查稿使用 Deck。内容仍属于项目。
+
+{/* ref file="../packages/academic-deck/src/components/Presentation.jsx" lines="5-9" hash="b534d5f5c384" blob="c3d738e43107" */}
+
+## ② 公共组件组合内容
+
+公式、题注、封面、目录与动画从统一入口导入。页面样式必须再导入 styles.css，页级扩展 CSS 留在项目内。
+
+{/* ref file="../packages/academic-deck/src/index.js" hash="a1858a019f30" blob="2bc65dd344b9" */}
+
+## ③ 浏览器与打印共享页面
+
+放映控制翻页和缩放；动画通过公共时间轴感知离页、隐藏和打印。打印使用明确的静态帧，避免 PDF 停在任意动画时刻。
+
+## 依赖与边界
+
+依赖 React、React DOM 与 KaTeX；消费端由 Vite 处理样式、素材和 SVG raw 导入。本包没有项目操作入口。
+
+{/* ref file="../packages/academic-deck/package.json" hash="4e28b84e3f53" blob="eceaf1b5484b" */}
+
+编写汇报的指导统一在插件 skill 中：写页面看 [组件与版式](/docs/plugin/references/authoring)，做动画看 [动画与打印](/docs/plugin/references/animation)。

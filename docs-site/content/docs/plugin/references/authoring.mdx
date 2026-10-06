@@ -1,0 +1,46 @@
+---
+title: 组件与版式
+description: 页面、公式、题注与固定画布
+---
+
+# 组件与版式
+
+```jsx
+import { Presentation, Cover, Contents, Chapter, Closing, Equation, Figure } from '@godcreator/academic-deck';
+import '@godcreator/academic-deck/styles.css';
+
+function Results() {
+  return <div className="content">
+    <h2>主要结论</h2>
+    <Equation number="1">{String.raw`P=UI`}</Equation>
+    <Figure number="1" caption="图像说明"><img src="./实际素材地址" alt="描述"/></Figure>
+  </div>;
+}
+
+const pages = [
+  { label: '封面', kind: 'cover', title: '标题', body: () => <Cover title="标题" presenter="姓名"/> },
+  { label: '结果', title: '结果与分析', body: Results, reference: '文献与数据来源' },
+  { label: '封底', kind: 'closing', title: '谢谢', body: Closing },
+];
+```
+
+页面的 label 唯一；普通正文省略 kind，由模板补齐页眉、校徽、页脚和页码，body 根使用 `.content`。
+Cover / Contents / Chapter / Closing 对应 kind 为 cover / contents / chapter / closing。
+Contents 的 chapters 项使用 `{ number: '01', title: '章节标题', page: 3 }`，page 从 1 起。
+Chapter 使用 number、title、subtitle；Closing 可传 subtitle。
+
+数学公式用 MathText（行内）、Equation（带编号的独立公式）、SvgMath（SVG 内公式）。
+Equation 的 children 是 TeX 字符串，number 是编号。
+Figure 使用 number、caption 和 children，表格标题使用 caption。
+Circuit 是现有 DAB 电路；三种内容示例从 `@godcreator/academic-deck/samples/dab` 导入 CircuitSlide、TheorySlide、ResultsSlide。
+通用品牌图片可经 `@godcreator/academic-deck/assets/<文件名>` 导入。
+设计稿专用的 Deck 带边距检查控件；正式汇报使用 Presentation。
+
+## 固定几何
+
+- 画布 960 × 540 pt，浏览器布局为 1280 × 720 px 后整体缩放。
+- 正文安全区：左／右 24 pt，上 80 pt，下 28 pt。单页放不下时拆页。
+- 标题 32 pt、小标题 24 pt、正文与公式 20 pt、表格与题注 16 pt、文献与页码 14 pt。
+- 已有复杂分段公式可使用确认过的 19 pt；品牌封面等保留自身展示字号。
+- 页级 CSS 放在项目内，限定自己的类名；公共组件与全局设计规则在独立包维护。
+- 动画的打印状态应包含完整静态信息，隐藏控制条。

@@ -1,0 +1,3 @@
+.presentation-body{background:#171717;overflow:hidden}.presentation{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:center;overflow:hidden}.presentation .slide-slot{margin:0;flex:none}.presentation .slide{box-shadow:none}.slide-cover,.slide-contents,.slide-chapter,.slide-closing{overflow:hidden}
+@media print{.presentation-body{overflow:visible;background:white}.presentation{display:block;width:auto;height:auto;overflow:visible}.presentation .slide-slot{margin:0}.slide img{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+

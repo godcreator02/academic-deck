@@ -1,0 +1,4 @@
+.dab-animation{width:100%;height:100%;min-height:0;display:flex;flex-direction:column}
+.dab-animation>.plot{width:100%;flex:1;min-height:0}
+.dab-motion-layer{pointer-events:none}
+@media print{.dab-motion-layer{display:none!important}}

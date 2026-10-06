@@ -1,0 +1,51 @@
+---
+title: 动画与打印
+description: 时间轴、翻页生命周期和打印静态帧
+---
+
+# 幻灯片动画规范
+
+各页动画使用共用时间轴和控制条，具体绘图由页面组件负责。
+
+## 播放与交互
+
+- 首次进入页面默认自动播放，用户可以关闭；启用减少动态效果时默认关闭。
+- 暂停保留当前位置，继续从该位置开始。在末尾点击播放会从起点开始。
+- 拖动进度时立即暂停并实时更新画面，松手后保持暂停。
+- 进度条支持鼠标、触摸和键盘；方向键微调，Home／End 到首尾。点击关键刻度准确定位并暂停。
+- 重播回到起点并开始播放。
+- 离开页面、隐藏标签页或打印时停止计时。返回时保留进度和原播放状态，不跳过离开期间的时间。
+- 关闭自动播放会立即暂停；开启时从当前位置播放。手动播放不改变自动播放开关。
+- 周期过程设置 `loop: true`；步骤演示默认在末尾停止。
+- 减少动态效果只影响默认自动播放，不禁用手动播放和拖动。
+- PDF 使用 `printProgress` 明确指定的静态帧，隐藏控制条。DAB 导出完整稳态波形并隐藏动态叠加层。
+
+## 控制条
+
+放在动画图下方、图注上方，使用模板的 16 pt 辅助字号。顺序为播放／暂停、进度条、当前位置、重播、自动播放开关；关键刻度位于进度条下方。点击和拖动控件不会翻页。
+
+物理过程的当前位置显示真实物理量，公式使用 `MathText`。演示时长与物理时间分开定义，例如 DAB 用 12 秒演示一个 10 μs 周期。
+
+## 组件接口
+
+`useAnimationTimeline({ durationMs, loop, autoPlay, printProgress })` 返回当前 `progress`、原始 `position`、`playing`、`running`、`autoPlay`、`printing`，以及 `play`、`pause`、`seek`、`restart`、`setAutoPlay` 操作。
+
+- `progress`：绘图用，范围 0–1；打印时自动切换到 `printProgress`。
+- `position`：交互时间轴的位置，打印不改写它。
+- `playing`：用户希望播放还是暂停；`running`：当前是否实际计时。
+- `seek(position)`：定位并暂停，可供控制条、关键帧或其他图内交互使用。
+
+`AnimationControls` 接收 `timeline`、`label`、纯文本 `valueText`、可含公式的 `readout` 和 `markers: [{ progress, label }]`。
+
+动画画面由当前进度确定，同一页关联的电路、波形和公式应共用一个时间轴。页面组件可在任意进度直接渲染，不依赖此前是否播放过。
+
+```jsx
+const timeline = useAnimationTimeline({
+  durationMs: 12000, loop: true, autoPlay: true, printProgress: 0.25,
+});
+return <>
+  <MyDiagram progress={timeline.progress}/>
+  <AnimationControls timeline={timeline} label="演示动画"
+    valueText={`${(timeline.position * 100).toFixed(1)}%`}/>
+</>;
+```

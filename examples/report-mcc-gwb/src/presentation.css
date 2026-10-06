@@ -1,0 +1,95 @@
+/* 本 deck 专用布局样式；基础组件样式来自 @godcreator/academic-deck/styles.css。
+   meeting-* 与 DAB 样张同名同值，mg-* 为本 deck 新增。 */
+
+.meeting-overview{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:28pt;align-items:center}
+.meeting-overview h2{font-size:32pt;line-height:1.35;margin-bottom:20pt}
+.meeting-overview .lead{margin-bottom:24pt}
+.meeting-overview .figure{height:270pt}
+.meeting-overview .meta{font-size:16pt;color:#666;line-height:1.8}
+.meeting-columns{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28pt}
+.meeting-columns section{min-width:0}
+.meeting-list{margin:0;padding-left:21pt}
+.meeting-list li{margin-bottom:16pt}
+.meeting-list li::marker{color:#c00000}
+.meeting-note{font-size:16pt;color:#666;line-height:1.45;margin-top:18pt}
+.meeting-section{border-top:.7pt solid #d9d9d9;margin-top:20pt;padding-top:16pt}
+.meeting-table caption{padding-bottom:10pt}
+.meeting-table td,.meeting-table th{padding:10pt 6pt}
+.meeting-table{margin-top:14pt}
+.meeting-columns .equation{margin:16pt 0}
+.meeting-summary{display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:22pt}
+.meeting-summary>.columns{align-items:start}
+.meeting-summary .takeaway{font-size:24pt;line-height:1.4;border-left:3pt solid #c00000;padding-left:14pt;margin:0}
+.meeting-summary .closing{font-size:24pt;text-align:center;border-top:.7pt solid #ddd;padding-top:14pt;margin:0}
+.meeting-topics{display:grid;gap:14pt;margin-top:20pt}
+.meeting-topics>div{display:grid;grid-template-columns:36pt 1fr;gap:12pt;align-items:baseline}
+.meeting-topics b{font-size:24pt;color:#c00000}
+.meeting-topics p{margin:0}
+.meeting-status{font-size:16pt;color:#737373}
+
+/* 提示词时间线（2.1） */
+.mg-timeline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16pt;align-items:stretch}
+.mg-stage{min-width:0;border-top:3pt solid var(--red);padding-top:10pt}
+.mg-stage-head{display:flex;align-items:baseline;gap:7pt;margin-bottom:10pt}
+.mg-stage-no{font-size:24pt;font-weight:700;color:var(--red);line-height:1}
+.mg-stage-title{font-size:20pt;font-weight:700;line-height:1.3}
+.mg-quote{font-size:16pt;line-height:1.45;color:#44494d;margin:0 0 12pt;padding-left:9pt;border-left:2pt solid #e5c9c9}
+.mg-quote:last-child{margin-bottom:0}
+.mg-quote .who{font-weight:600;color:var(--red);margin-right:4pt}
+.mg-quote.ai .who{color:#956b0c}
+.mg-quote.result{border-left-color:#d9d9d9;color:#737373}
+.mg-quote.result .who{color:#737373}
+.mg-timeline-note{border-top:.7pt solid #d9d9d9;margin-top:14pt;padding-top:10pt}
+
+/* 封面（DeckCover）：三行文字与装饰线归到同一中轴（复刻盒子的原位各有偏移，短文字会露馅） */
+.replica.mg-cover .cover__motto{left:79.1502pt}
+.replica.mg-cover .cover__subtitle{left:0;right:0;width:auto;padding:0;text-align:center;text-align-last:center}
+.replica.mg-cover .cover__presenter{left:0;right:0;width:auto;padding:0;text-align:center;text-align-last:center}
+.replica.mg-cover .cover__rule--l{left:216pt}
+.replica.mg-cover .cover__rule--r{left:588.1pt}
+
+/* 聊天记录页（2.1/2.2） */
+.mg-chat{display:flex;flex-direction:column;gap:8pt}
+.mg-chat-row{display:flex;max-width:88%}
+.mg-chat-row.me{align-self:flex-end}
+.mg-chat-row.ai{align-self:flex-start}
+.mg-chat-bubble{margin:0;padding:6pt 12pt;border-radius:8pt;font-size:16pt;line-height:1.4;background:#f4f6f7;border:1pt solid #d9dee1}
+.me .mg-chat-bubble{background:#fbf3e0;border-color:#ead9b0}
+.mg-chat-who{font-weight:600;color:var(--red);margin-right:7pt}
+.ai .mg-chat-who{color:#956b0c}
+
+/* 真实截图页 */
+.figure-media img{max-width:100%;max-height:100%;object-fit:contain}
+.mg-model{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.78fr) minmax(0,.5fr);gap:20pt}
+.mg-model section{min-width:0}
+.mg-twofig{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22pt}
+
+/* 成品页（3.1） */
+.mg-final{display:grid;grid-template-rows:minmax(0,1.45fr) minmax(0,1fr);gap:12pt}
+.mg-final-main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20pt;min-height:0}
+.mg-final-bottom{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24pt;border-top:.7pt solid #ddd;padding-top:8pt;min-height:0}
+.mg-final-bottom h2{margin-bottom:2pt}
+.mg-final-bottom p{margin:0 0 8pt}
+.mg-final-bottom .meeting-table{margin-top:4pt}
+.mg-final-bottom .meeting-table td,.mg-final-bottom .meeting-table th{padding:3pt 6pt}
+
+/* GWB 页（4.2） */
+.mg-arch-page{display:grid;grid-template-rows:minmax(0,1fr) auto;gap:12pt}
+.mg-arch-bottom{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24pt;border-top:.7pt solid #ddd;padding-top:10pt}
+
+/* 示意图通用 */
+.mg-diagram{overflow:visible;font-family:"Microsoft YaHei","微软雅黑",sans-serif}
+.mg-diagram text{font-size:16px;fill:#44494d}
+.mg-diagram .node-title{font-weight:600}
+.mg-diagram .sub-label{fill:#737373}
+.mg-diagram .accent-t{fill:var(--red);font-weight:600}
+.mg-diagram .gold-t{fill:#956b0c;font-weight:600}
+.mg-diagram .node{fill:#fff;stroke:#44494d;stroke-width:1.6}
+.mg-diagram .node-accent{fill:#fff;stroke:var(--red);stroke-width:2}
+.mg-diagram .node-dash{fill:#fafafa;stroke:#9a9a9a;stroke-width:1.4;stroke-dasharray:6 4}
+.mg-diagram .flow{fill:none;stroke:#44494d;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mg-diagram .flow-thin{fill:none;stroke:#8a8f93;stroke-width:1.3;stroke-linecap:round;stroke-dasharray:5 4}
+.mg-diagram .arrowhead{fill:#44494d;stroke:none}
+.mg-diagram .wire{fill:none;stroke:#3f4448;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.mg-diagram .plot-title{font-size:17px;font-weight:600}
+.mg-diagram .trace-drift{fill:none;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round}

@@ -1,0 +1,11 @@
+{
+  "title": "生成正本",
+  "pages": [
+    "readme",
+    "components-readme",
+    "plugin-readme",
+    "site-readme",
+    "agents",
+    "claude"
+  ]
+}

@@ -1,0 +1,12 @@
+.animation-controls{display:flex;align-items:center;gap:7pt;flex:none;width:100%;padding-top:5pt;font-size:16pt;line-height:1.2;color:#737373}
+.animation-controls button{font-size:inherit;line-height:1.2;color:#52636d;background:transparent;border:0;border-radius:2pt;padding:2pt;white-space:nowrap}
+.animation-controls button:hover{background:#edf1f3}
+.animation-track{position:relative;flex:1;min-width:70pt;padding-bottom:5pt;margin:0 3pt}
+.animation-track>input{display:block;width:100%;margin:0;height:16pt;accent-color:#c00000;cursor:ew-resize;touch-action:none}
+.animation-markers{position:absolute;left:7px;right:7px;bottom:0;height:5pt}
+.animation-markers>button{position:absolute;transform:translateX(-50%);width:10pt;height:7pt;padding:0;border-radius:0}
+.animation-markers>button::after{content:'';position:absolute;top:1pt;bottom:1pt;left:calc(50% - .5pt);width:1pt;background:#95a0a6}
+.animation-value{flex:none;min-width:99pt;text-align:center;font-variant-numeric:tabular-nums;white-space:nowrap}
+.animation-auto{display:flex;align-items:center;gap:3pt;white-space:nowrap;cursor:pointer}
+.animation-auto>input{width:12pt;height:12pt;margin:0;accent-color:#c00000}
+@media print{.animation-controls{display:none!important}}

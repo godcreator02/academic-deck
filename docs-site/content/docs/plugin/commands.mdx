@@ -1,0 +1,22 @@
+---
+title: 命令契约
+description: 四条写命令的参数、回执、保护与执行边界。
+---
+
+所有命令的 directory 都是项目绝对路径，所有命令都会写本机文件。通过 gwb search 的 deck. 前缀取得当前安装版本的用法。
+
+以下登记表是命令接口的正本，参数和返回随代码核对：
+
+{/* ref file="../plugins/academic-deck/src/index.ts" lines="15-24" hash="dac599abe04b" blob="e994b11881b2" */}
+
+## 参数与覆盖保护
+
+目录必须绝对，browser 只接受 chrome 或 msedge；packageSpec 接受固定版本或本地 .tgz 的绝对路径。创建保护由 create.mjs 的独占建目录实现，PDF 写入由 inspect.mjs 使用 wx 实现。
+
+{/* ref file="../plugins/academic-deck/src/arguments.mjs" hash="d7098e943bc4" blob="1f6317143cee" */}
+
+## 谁负责运行与清理
+
+构建超时 120 秒，由 src/build-project.mjs 负责退出码、输出截取和子进程取消。检查、导出超时 180 秒，由 src/inspect.mjs 和 src/static-server.mjs 负责临时服务与浏览器关闭。同一目录的互斥与卸载取消见 src/jobs.mjs。以上路径均相对 plugins/academic-deck。
+
+完整检查明细写在项目 .artifacts/check.json。gwb 回执返回产物位置与页数；返回失败时不能标记交付完成。

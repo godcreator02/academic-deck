@@ -1,0 +1,11 @@
+# @godcreator/gwb-academic-deck
+
+提供 deck.create、deck.build、deck.check、deck.export 四条 gwb 命令，无窗格、无独立 CLI。
+命令用法与完成判据见 [制作流程](skill-source/academic-deck/SKILL.md)。
+
+运行时依赖 gwb-commands、gwb-skills 及内核契约。
+制作流程、组件用法与动画规范都归本插件的 academic-deck skill。正本在 docs-site/content/docs/plugin/，docfirst 生成 skill-source/，插件构建将其打包到 skills/，并读取组件版本写入附件。两包按同一批次配套发布。
+起步模板在 templates/；浏览器驱动 playwright-core 连同运行资源随 dist/vendor 发布，目标机器使用已安装的 Chrome 或 Edge。
+
+同一项目串行操作；插件卸载时取消在途操作并等待清理。构建运行目标项目的 Vite，120 秒超时；检查/导出启动临时 HTTP 服务与无头浏览器，180 秒超时，成功或失败均关闭。
+检查回执只返回页数及产物位置，完整页面记录在 .artifacts/check.json。

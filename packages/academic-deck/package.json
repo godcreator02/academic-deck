@@ -1,0 +1,35 @@
+{
+  "name": "@godcreator/academic-deck",
+  "version": "0.1.0",
+  "description": "电力电子学术汇报的 React 组件、样式与素材",
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js",
+    "./styles.css": "./dist/styles.css",
+    "./assets/*": "./dist/assets/*",
+    "./samples/dab": "./dist/samples/DabSamples.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "peerDependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "dependencies": {
+    "katex": "^0.18.7"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.12"
+  },
+  "publishConfig": {
+    "registry": "https://git.tianshen02.online:28377/api/packages/godcreator/npm/"
+  }
+}

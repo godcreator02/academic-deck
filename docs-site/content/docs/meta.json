@@ -1,0 +1,12 @@
+{
+  "title": "现状",
+  "pages": [
+    "index",
+    "components",
+    "plugin",
+    "maintenance",
+    "wiring",
+    "glossary",
+    "outputs"
+  ]
+}

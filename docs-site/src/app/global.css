@@ -1,0 +1,57 @@
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
+@import '@godcreator/docfirst-explainer/styles.css';
+@import '@godcreator/docfirst-workflow/fumadocs/term.css';
+
+.map-hint { font-size: .8rem; color: var(--color-fd-muted-foreground); }
+.map-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(220px, 1fr); gap: 20px; align-items: start; }
+.map-layout svg { width: 100%; height: auto; }
+.map-mobile { display: none; }
+.map-module { fill: var(--color-fd-card); stroke: #5282bd; stroke-width: 1.5; stroke-dasharray: 5 4; }
+.external .map-module { stroke: var(--color-fd-muted-foreground); stroke-dasharray: none; }
+.map-title { fill: var(--color-fd-foreground); font-size: 16px; font-weight: 650; }
+.map-detail { fill: var(--color-fd-muted-foreground); font-size: 13px; }
+.map-capability { fill: color-mix(in srgb, #5282bd 9%, var(--color-fd-card)); stroke: color-mix(in srgb, #5282bd 25%, transparent); }
+.map-edge { color: #5282bd; }
+.map-number { fill: var(--color-fd-background); stroke: currentColor; stroke-width: 2; }
+.map-number-text { fill: var(--color-fd-foreground); font-size: 14px; font-weight: 700; }
+.map-node, .map-edge { transition: opacity 150ms; }
+.map-node, .map-edge [role=button] { cursor: pointer; }
+.map-node:focus-visible, .map-edge [role=button]:focus-visible { outline: 2px solid #5282bd; outline-offset: 4px; }
+.muted { opacity: .3; }
+.map-notes { font-size: .85rem; }
+.map-notes p { margin: 12px; }
+.map-notes ol { list-style: none; padding: 0; margin: 12px 0; }
+.map-notes button { text-align: left; width: 100%; padding: 10px; border: 1px solid var(--color-fd-border); border-radius: 8px; margin-bottom: 8px; cursor: pointer; }
+.map-notes button[aria-pressed=true] { border-color: #5282bd; background: color-mix(in srgb, #5282bd 9%, transparent); }
+.map-tooltip { min-height: 90px; padding: 12px; margin-top: 12px; border-left: 2px solid #5282bd; color: var(--color-fd-muted-foreground); }
+.workflow-frame { padding: 16px; }
+.workflow-track { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.workflow-panels { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 14px; }
+.workflow-panels p, .workflow-panels strong { display: block; margin: 12px; overflow-wrap: anywhere; }
+@media (max-width: 1000px) { .map-layout { grid-template-columns: 1fr; } }
+@media (max-width: 600px) {
+ .workflow-panels { grid-template-columns: 1fr; }
+ .map-layout svg { display: none; }
+ .map-mobile { display: grid; gap: 12px; }
+ .map-mobile button { display: grid; gap: 6px; text-align: left; padding: 14px; border: 1px dashed var(--dx-blue); border-radius: 12px; min-width: 0; overflow-wrap: anywhere; }
+ .map-mobile button[aria-pressed=true] { background: color-mix(in srgb, var(--dx-blue) 12%, transparent); }
+ .map-mobile code { font-size: 12px; background: var(--color-fd-card); padding: 4px; }
+}
+@media (prefers-reduced-motion: reduce) { .map-node, .map-edge { transition: none; } }
+
+html {
+  scrollbar-gutter: stable;
+}
+
+html > body[data-scroll-locked] {
+  margin-right: 0px !important;
+  --removed-body-scroll-bar-size: 0px !important;
+}
+
+@theme {
+  --font-sans: 'Sarasa Mono SC', 'Sarasa Gothic SC', ui-sans-serif, system-ui, 'Segoe UI', 'PingFang SC',
+    'Microsoft YaHei UI', 'Noto Sans SC', sans-serif;
+  --font-mono: 'Sarasa Mono SC', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+}

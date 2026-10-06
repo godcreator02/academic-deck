@@ -1,0 +1,10 @@
+{
+  "title": "gwb 插件",
+  "pages": [
+    "index",
+    "workflow",
+    "commands",
+    "skill",
+    "references"
+  ]
+}

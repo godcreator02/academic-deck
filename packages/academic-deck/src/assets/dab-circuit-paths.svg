@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 610 244">
+            <title id="circuit-title">双有源桥 DAB 理想主电路</title><desc id="circuit-desc">原边四个开关构成全桥，经串联电感和高频变压器连接副边全桥。原边电压 vAB，副边电压 vCD，电感电流向副边为正；跨线弧表示不相连。忽略寄生参数与死区。</desc>
+            <defs><g id="switch" class="wire"><path d="M0 -12 V-4 M0 12 V20 M0 -4 L10 8"/><circle cx="0" cy="-4" r="2" fill="white"/><circle cx="0" cy="12" r="2" fill="white"/></g><marker id="c-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7" fill="#b60000"/></marker></defs>
+            <g class="wire">
+              <path d="M28 108 V42 H176 V63 M28 142 V188 H176 V166 M88 42 V63 M88 95 V139 M88 171 V188 M176 95 V139"/>
+              <circle cx="28" cy="125" r="17" fill="white"/>
+              <path d="M22 119 H34 M28 113 V125 M22 133 H34"/>
+              <use href="#switch" x="88" y="75"/><use href="#switch" x="88" y="151"/>
+              <use href="#switch" x="176" y="75"/><use href="#switch" x="176" y="151"/>
+              <path d="M88 112 H166 Q176 97 186 112 H216"/>
+              <path d="M216 112 a6 7 0 0 1 12 0 a6 7 0 0 1 12 0 a6 7 0 0 1 12 0 a6 7 0 0 1 12 0 H289 V94"/>
+              <path d="M289 94 a8 7 0 0 1 0 14 a8 7 0 0 1 0 14 a8 7 0 0 1 0 14 a8 7 0 0 1 0 14 V207 H205 V130 H176"/>
+              <path d="M311 89 V155 M316 89 V155"/>
+              <path d="M339 94 a8 7 0 0 0 0 14 a8 7 0 0 0 0 14 a8 7 0 0 0 0 14 a8 7 0 0 0 0 14 V207 H389 V130 H431 Q441 115 451 130 H529"/>
+              <path d="M339 94 V80 H371 V112 H441"/>
+              <path d="M441 63 V42 H580 V108 M529 42 V63 M441 95 V139 M529 95 V139 M441 171 V188 H580 V142 M529 171 V188"/>
+              <circle cx="580" cy="125" r="17" fill="white"/>
+              <path d="M574 119 H586 M580 113 V125 M574 133 H586"/>
+              <use href="#switch" x="441" y="75"/><use href="#switch" x="441" y="151"/>
+              <use href="#switch" x="529" y="75"/><use href="#switch" x="529" y="151"/>
+            </g>
+            <g fill="#3f4448"><circle cx="88" cy="112" r="3.6"/><circle cx="176" cy="130" r="3.6"/><circle cx="441" cy="112" r="3.6"/><circle cx="529" cy="130" r="3.6"/><circle cx="284" cy="90" r="2.7"/><circle cx="345" cy="90" r="2.7"/></g>
+            <path d="M224 66 H266" stroke="#b60000" stroke-width="2" marker-end="url(#c-arrow)"/>
+            
+            
+            
+            
+            
+            
+            
+          </svg>
