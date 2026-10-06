@@ -29,7 +29,7 @@ export const components = {
   {id:'3',from:'presentation',to:'browser',label:'页面生命周期',text:'③ 放映与公共动画组件共同响应活动页、页面隐藏和打印，打印使用静态帧。'},
  ],
 };
-/* ref file="../plugins/academic-deck/build.ts" lines="7-19" hash="c0d373568b5b" blob="b8d1e25f8b4d" */
+/* ref file="../plugins/academic-deck/build.ts" lines="7-19" hash="cd765c78cefb" blob="133329e18c91" */
 export const plugin = {
  title:'一次命令从入口到产物',
  nodes:[

@@ -15,12 +15,10 @@
     "noUncheckedIndexedAccess": true,
     "isolatedModules": true,
     "skipLibCheck": true,
-    "noEmit": true,
-    "allowJs": true,
-    "checkJs": false
+    "noEmit": true
   },
   "include": [
-    "src/index.ts",
+    "src/**/*.ts",
     "build.ts",
     "tests/**/*.ts"
   ]

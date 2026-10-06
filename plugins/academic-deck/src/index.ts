@@ -2,12 +2,12 @@ import { readFile } from 'node:fs/promises'
 import type { GwbContext } from '@godcreator/gwb-kernel-desktop'
 import type {} from '@godcreator/gwb-commands'
 import type {} from '@godcreator/gwb-skills'
-import { parseArguments } from './arguments.mjs'
-import { createDeck } from './create.mjs'
-import { buildProject } from './build-project.mjs'
-import { inspectDeck } from './inspect.mjs'
-import { loadChromium } from './browser.mjs'
-import { createJobs } from './jobs.mjs'
+import { parseArguments } from './arguments'
+import { createDeck } from './create'
+import { buildProject } from './build-project'
+import { inspectDeck } from './inspect'
+import { loadChromium } from './browser'
+import { createJobs } from './jobs'
 
 export const name = 'gwb-academic-deck'
 export const inject = ['gwbCommands', 'gwbSkills']
@@ -35,11 +35,11 @@ export function apply(ctx: GwbContext): void {
       return jobs.run(args.directory, async (signal: AbortSignal) => {
         signal.throwIfAborted()
         if (definition.action === 'create') {
-          const component = JSON.parse(await readFile(new URL('./component-version.json', import.meta.url), 'utf8'))
-          return createDeck(args.directory, args, component.version)
+          const component = JSON.parse(await readFile(new URL('./component-version.json', import.meta.url), 'utf8')) as { version: string }
+          return createDeck(args.directory, { title: args.title, packageSpec: args.packageSpec }, component.version)
         }
         if (definition.action === 'build') return buildProject(args.directory, signal)
-        const result = await inspectDeck(args.directory, { ...args, pdf: definition.action === 'export' }, loadChromium(), signal)
+        const result = await inspectDeck(args.directory, { browser: args.browser, out: args.out, pdf: definition.action === 'export' }, loadChromium(), signal)
         return { directory: args.directory, pages: result.count, report: result.report, screenshots: result.screenshots, ...(result.pdf ? { pdf: result.pdf } : {}) }
       })
     })
