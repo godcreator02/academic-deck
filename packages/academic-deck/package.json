@@ -1,7 +1,8 @@
 {
   "name": "@godcreator/academic-deck",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "电力电子学术汇报的 React 组件、样式与素材",
+  "license": "MIT",
   "type": "module",
   "exports": {
     ".": "./dist/index.js",
@@ -11,7 +12,8 @@
     "./package.json": "./package.json"
   },
   "files": [
-    "dist"
+    "dist",
+    "LICENSE"
   ],
   "sideEffects": [
     "**/*.css"
@@ -30,10 +32,11 @@
     "esbuild": "^0.25.12"
   },
   "publishConfig": {
-    "registry": "https://git.tianshen02.online:28377/api/packages/godcreator/npm/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "https://git.tianshen02.online:28377/godcreator/academic-deck.git"
+    "url": "https://github.com/godcreator02/academic-deck.git"
   }
 }

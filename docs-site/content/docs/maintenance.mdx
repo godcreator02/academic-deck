@@ -29,4 +29,4 @@ README、AGENTS、CLAUDE 与插件完整 skill 的对应关系见 docs-site/docf
 
 ## 插件联调
 
-使用 gwb-devkit 命名隔离 home 安装开发包；通过 deck.create 的 packageSpec 指定本地组件 tgz，再安装依赖、构建、检查、导出。正式发版按 gwb-release 和 gwb-devkit 执行，两包按同一批次配套发布，按依赖顺序先组件包后插件；插件记录该批组件版本。
+使用 gwb-devkit 命名隔离 home 安装开发包；通过 deck.create 的 packageSpec 指定本地组件 tgz，再安装依赖、构建、检查、导出。正式发版按 gwb-release 和 gwb-devkit 执行，两包按同一批次配套发布，按依赖顺序先组件包后插件；插件记录该批组件版本。两包公开发在 npmjs：先把提交推到 GitHub 仓 godcreator02/academic-deck，devkit.release 把包文件挂到 GitHub release 上，由仓根 .github/workflows/publish.yml 经 trusted publishing 发出；本机 @godcreator 还指向 gitea 团队源的过渡期另加 alsoPublishTo 写上那个源。
